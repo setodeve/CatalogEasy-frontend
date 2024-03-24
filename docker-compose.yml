@@ -4,12 +4,12 @@ services:
   front:
     container_name: front
     build:
-      context: ./front
+      context: ./
       dockerfile: Dockerfile
 
     volumes:
-      - ./front/src:/app/src
-      - ./front/public:/app/public
+      - ./src:/app/src
+      - ./public:/app/public
     restart: always
     ports:
       - 3000:3000
