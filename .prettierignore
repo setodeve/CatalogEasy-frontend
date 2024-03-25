@@ -1,0 +1,17 @@
+node_modules/
+.next/
+build/
+dist/
+out/
+public/
+package.json
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+next.config.mjs
+postcss.config.js
+tailwind.config.ts
+tsconfig.json
+*.yml
+next-env.d.ts
+*.md
