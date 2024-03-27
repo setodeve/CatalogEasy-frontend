@@ -1,7 +1,8 @@
-import Image from 'next/image'
-import { useState } from 'react'
+import { default as Image } from 'next/image'
+import { useRef, useState } from 'react'
 export default function ImageUpload() {
   const [imgsSrc, setImgsSrc] = useState<string[]>([])
+  const imageRef = useRef<HTMLInputElement>(null)
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       for (const file of e.target.files) {
@@ -17,13 +18,35 @@ export default function ImageUpload() {
           console.log(reader.error)
         }
       }
-      console.log(imgsSrc, imgsSrc.length)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (imageRef.current && imageRef.current.files) {
+      const formData = new FormData()
+      for (let i = 0; i < imageRef.current.files.length; i++) {
+        formData.append(`image[]`, imageRef.current.files[i])
+      }
+
+      const res = await fetch(`http://0.0.0.0:8080/api/product_images`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (res.ok) {
+        console.log('Image uploaded')
+      }
     }
   }
 
   return (
     <div>
-      <input onChange={onChange} type="file" name="file" multiple />
+      <form onSubmit={handleSubmit}>
+        <input onChange={onChange} type="file" multiple ref={imageRef} />
+        <input type="submit" value="Upload" />
+      </form>
+
       {imgsSrc.map((link, index) => (
         <Image
           key={index}
