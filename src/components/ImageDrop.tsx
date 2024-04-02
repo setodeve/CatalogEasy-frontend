@@ -1,6 +1,8 @@
+import { faImage } from '@fortawesome/free-solid-svg-icons'
 import type { DropEvent, FileRejection } from '@yamada-ui/dropzone'
 import { Dropzone } from '@yamada-ui/dropzone'
-import { Button, Image, Text, VStack } from '@yamada-ui/react'
+import { Icon } from '@yamada-ui/fontawesome'
+import { CloseIcon, Image, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import React, { useState } from 'react'
 export default function ImageDrop() {
@@ -29,26 +31,22 @@ export default function ImageDrop() {
   return (
     <>
       <VStack style={styles.container}>
-        {selectedImage == null ? (
-          <Dropzone w="40%" onChange={imageChange} onDrop={imageDrop}>
-            <VStack w="auto" gap="2xs">
-              <Text fontSize="xl">Drag file here or click to select file</Text>
-              <Text fontSize="sm">
-                Attach as many files as you like, each file should not exceed
-                3mb
-              </Text>
-            </VStack>
+        {selectedImage === null ? (
+          <Dropzone
+            style={styles.container}
+            onChange={imageChange}
+            onDrop={imageDrop}
+          >
+            <Icon icon={faImage} size="6xl" />
           </Dropzone>
         ) : (
           <VStack style={styles.container}>
+            <CloseIcon onClick={removeSelectedImage} style={styles.delete} />
             <Image
               src={URL.createObjectURL(selectedImage)}
               style={styles.image}
-              alt="Thumb"
+              alt="product image"
             />
-            <Button onClick={removeSelectedImage} style={styles.delete}>
-              Remove This Image
-            </Button>
           </VStack>
         )}
       </VStack>
@@ -62,19 +60,25 @@ const styles: Record<string, CSSProperties> = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: 10,
   },
   // preview: {
   //   marginTop: 50,
   //   display: 'flex',
   //   flexDirection: 'column',
   // },
-  image: { maxWidth: 600, justifyContent: 'center', alignItems: 'center' },
+  image: {
+    width: 400,
+    height: 400,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   delete: {
     cursor: 'pointer',
-    padding: 15,
-    background: 'red',
-    color: 'white',
     border: 'none',
+    marginBottom: '370px',
+    marginLeft: '340px',
+    position: 'absolute',
+    color: 'red',
   },
 }
