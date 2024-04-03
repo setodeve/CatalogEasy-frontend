@@ -47,7 +47,7 @@ body {
 .page {
   width: 210mm;
   min-height: 297mm;
-  padding: 20mm;
+  padding: 5mm;
   margin: 10mm auto;
   border: 1px #d3d3d3 solid;
   border-radius: 5px;
@@ -80,5 +80,9 @@ body {
     box-shadow: initial;
     background: initial;
     page-break-after: always;
+  }
+
+  .hideInPrint {
+    display: none;
   }
 }

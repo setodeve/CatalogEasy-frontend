@@ -1,5 +1,4 @@
 import DynamicForm from '@/components/DynamicForm'
-import ImageDrop from '@/components/ImageDrop'
 export default function Home() {
   return (
     <main>
@@ -9,10 +8,10 @@ export default function Home() {
         alt=""
       /> */}
       {/* <DynamicForm /> */}
-      <div className="page">
+      <div>
         <DynamicForm />
       </div>
-      <div className="page">
+      {/* <div className="page">
         <ImageDrop />
         <ImageDrop />
       </div>
@@ -23,7 +22,7 @@ export default function Home() {
         <div className="page">
           <div className="subpage">Page 2/2</div>
         </div>
-      </div>
+      </div> */}
     </main>
   )
 }
