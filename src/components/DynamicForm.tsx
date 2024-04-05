@@ -3,8 +3,8 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
-
+import React from 'react'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 function DynamicForm() {
   type ProductData = {
     product: {
@@ -13,10 +13,17 @@ function DynamicForm() {
       tradePrice: number
       retailPrice: number
       remark: string
-      image_id: string
+      image: File | string | null
     }[]
   }
-
+  const formTemplate = {
+    name: '',
+    size: '',
+    tradePrice: 0,
+    retailPrice: 0,
+    remark: '',
+    image: null,
+  }
   const {
     register,
     control,
@@ -31,17 +38,18 @@ function DynamicForm() {
           tradePrice: 0,
           retailPrice: 0,
           remark: '',
-          image_id: '',
+          image: null,
         },
       ],
     },
     mode: 'onBlur',
   })
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, update, remove } = useFieldArray({
     name: 'product',
     control,
   })
-  const onSubmit = (data: ProductData) => console.log(data)
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) =>
+    console.log(e, data)
 
   function splitArrayIntoChunksOfTwo<T>(array: T[]): T[][] {
     return array.reduce((resultArray: T[][], item, index) => {
@@ -54,7 +62,7 @@ function DynamicForm() {
       return resultArray
     }, [])
   }
-  let index = -1
+
   return (
     <>
       <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
@@ -67,14 +75,7 @@ function DynamicForm() {
           <Icon
             type="button"
             onClick={() => {
-              append({
-                name: '',
-                size: '',
-                tradePrice: 0,
-                retailPrice: 0,
-                remark: '',
-                image_id: '',
-              })
+              append(formTemplate)
             }}
             icon={faPlus}
             size="2xl"
@@ -90,74 +91,95 @@ function DynamicForm() {
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
           return (
             <div key={`chunk-${chunkIndex}`} className="page">
-              {chunk.map((field) => {
-                index++
+              {chunk.map((f, fieldIndex) => {
+                // index++
+                const absoluteIndex = chunkIndex * 2 + fieldIndex
                 return (
-                  <VStack key={field.id} style={styles.container}>
+                  <VStack key={f.id} style={styles.container}>
+                    <h5>{`No.${absoluteIndex}`}</h5>
                     <Icon
                       type="button"
-                      onClick={() => remove(index)}
+                      onClick={() => {
+                        remove(absoluteIndex)
+                      }}
                       style={styles.delete}
                       icon={faXmark}
                       size="2xl"
                       _media={[{ type: 'print', css: { display: 'none' } }]}
                     />
                     <VStack className="section">
-                      <ImageDrop />
+                      <Controller
+                        name={`product.${absoluteIndex}.image`}
+                        control={control}
+                        render={({ field }) => (
+                          <ImageDrop
+                            product={fields}
+                            field={field}
+                            update={update}
+                            index={absoluteIndex}
+                          />
+                        )}
+                      />
+
                       <Input
                         placeholder="name"
-                        {...register(`product.${index}.name` as const)}
+                        {...register(`product.${absoluteIndex}.name` as const)}
                         className={
-                          errors?.product?.[index]?.name ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.name ? 'error' : ''
                         }
-                        defaultValue={field.name}
+                        defaultValue={f.name}
                       />
                       <Input
                         placeholder="size"
-                        {...register(`product.${index}.size` as const)}
+                        {...register(`product.${absoluteIndex}.size` as const)}
                         className={
-                          errors?.product?.[index]?.size ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.size ? 'error' : ''
                         }
-                        defaultValue={field.size}
+                        defaultValue={f.size}
                       />
                       <Input
-                        placeholder="value"
+                        placeholder="tradePrice"
                         type="number"
-                        {...register(`product.${index}.tradePrice` as const, {
-                          valueAsNumber: true,
-                        })}
+                        {...register(
+                          `product.${absoluteIndex}.tradePrice` as const,
+                          {
+                            valueAsNumber: true,
+                          },
+                        )}
                         className={
-                          errors?.product?.[index]?.tradePrice ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.tradePrice
+                            ? 'error'
+                            : ''
                         }
-                        defaultValue={field.tradePrice}
+                        defaultValue={f.tradePrice}
                       />
                       <Input
-                        placeholder="value"
+                        placeholder="retailPrice"
                         type="number"
-                        {...register(`product.${index}.retailPrice` as const, {
-                          valueAsNumber: true,
-                        })}
+                        {...register(
+                          `product.${absoluteIndex}.retailPrice` as const,
+                          {
+                            valueAsNumber: true,
+                          },
+                        )}
                         className={
-                          errors?.product?.[index]?.retailPrice ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.retailPrice
+                            ? 'error'
+                            : ''
                         }
-                        defaultValue={field.retailPrice}
+                        defaultValue={f.retailPrice}
                       />
                       <Input
                         placeholder="remark"
-                        {...register(`product.${index}.remark` as const)}
+                        {...register(
+                          `product.${absoluteIndex}.remark` as const,
+                        )}
                         className={
-                          errors?.product?.[index]?.remark ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.remark
+                            ? 'error'
+                            : ''
                         }
-                        defaultValue={field.remark}
-                      />
-                      <Input
-                        placeholder="image_id"
-                        {...register(`product.${index}.image_id` as const)}
-                        className={
-                          errors?.product?.[index]?.image_id ? 'error' : ''
-                        }
-                        defaultValue={field.image_id}
-                        type="hidden"
+                        defaultValue={f.remark}
                       />
                     </VStack>
                   </VStack>
