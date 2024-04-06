@@ -3,7 +3,7 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 function DynamicForm() {
   type ProductData = {
@@ -28,6 +28,7 @@ function DynamicForm() {
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ProductData>({
     defaultValues: {
@@ -44,7 +45,8 @@ function DynamicForm() {
     },
     mode: 'onBlur',
   })
-  const { fields, append, update, remove } = useFieldArray({
+  const [imageUpdated, setImageUpdated] = useState(false)
+  const { fields, append, remove } = useFieldArray({
     name: 'product',
     control,
   })
@@ -62,12 +64,21 @@ function DynamicForm() {
       return resultArray
     }, [])
   }
-
+  const handleImageChange = (index: number, src: string) => {
+    setValue(`product.${index}.image`, src)
+    setImageUpdated(!imageUpdated)
+  }
   return (
     <>
-      <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
+      <VStack as="form" onSubmit={handleSubmit((e, data) => onSubmit(e, data))}>
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
+          style={{
+            padding: '1px',
+            width: '95%',
+            zIndex: 1000,
+            justifyContent: 'space-between',
+          }}
           position="sticky"
           top="10"
           marginLeft={30}
@@ -79,12 +90,25 @@ function DynamicForm() {
             }}
             icon={faPlus}
             size="2xl"
+            style={{
+              borderRadius: '100px',
+              backgroundColor: '#7bc0f9',
+              padding: '10px',
+              color: 'white',
+              cursor: 'pointer',
+            }}
           />
           <Input
             type="submit"
             value="submit"
             maxWidth="100"
-            colorScheme="primary"
+            style={{
+              backgroundColor: '#7bc0f9',
+              color: 'white',
+              cursor: 'pointer',
+              textAlign: 'center',
+              border: 0,
+            }}
           />
         </HStack>
 
@@ -92,7 +116,6 @@ function DynamicForm() {
           return (
             <div key={`chunk-${chunkIndex}`} className="page">
               {chunk.map((f, fieldIndex) => {
-                // index++
                 const absoluteIndex = chunkIndex * 2 + fieldIndex
                 return (
                   <VStack key={f.id} style={styles.container}>
@@ -111,12 +134,10 @@ function DynamicForm() {
                       <Controller
                         name={`product.${absoluteIndex}.image`}
                         control={control}
-                        render={({ field }) => (
+                        render={() => (
                           <ImageDrop
-                            product={fields}
-                            field={field}
-                            update={update}
                             index={absoluteIndex}
+                            change={handleImageChange}
                           />
                         )}
                       />
@@ -137,38 +158,40 @@ function DynamicForm() {
                         }
                         defaultValue={f.size}
                       />
-                      <Input
-                        placeholder="tradePrice"
-                        type="number"
-                        {...register(
-                          `product.${absoluteIndex}.tradePrice` as const,
-                          {
-                            valueAsNumber: true,
-                          },
-                        )}
-                        className={
-                          errors?.product?.[absoluteIndex]?.tradePrice
-                            ? 'error'
-                            : ''
-                        }
-                        defaultValue={f.tradePrice}
-                      />
-                      <Input
-                        placeholder="retailPrice"
-                        type="number"
-                        {...register(
-                          `product.${absoluteIndex}.retailPrice` as const,
-                          {
-                            valueAsNumber: true,
-                          },
-                        )}
-                        className={
-                          errors?.product?.[absoluteIndex]?.retailPrice
-                            ? 'error'
-                            : ''
-                        }
-                        defaultValue={f.retailPrice}
-                      />
+                      <HStack>
+                        <Input
+                          placeholder="tradePrice"
+                          type="number"
+                          {...register(
+                            `product.${absoluteIndex}.tradePrice` as const,
+                            {
+                              valueAsNumber: true,
+                            },
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.tradePrice
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.tradePrice}
+                        />
+                        <Input
+                          placeholder="retailPrice"
+                          type="number"
+                          {...register(
+                            `product.${absoluteIndex}.retailPrice` as const,
+                            {
+                              valueAsNumber: true,
+                            },
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.retailPrice
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.retailPrice}
+                        />
+                      </HStack>
                       <Input
                         placeholder="remark"
                         {...register(

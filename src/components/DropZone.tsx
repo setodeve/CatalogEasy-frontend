@@ -4,19 +4,29 @@ import { CloseIcon, Image, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
 import { useDrop } from 'react-dnd'
-const DropZone = () => {
-  const [droppedImage, setDroppedImage] = useState(null)
+const DropZone = ({
+  index,
+  change,
+}: {
+  index: number
+  change: (index: number, image: string | null) => void
+}) => {
+  const [droppedImage, setDroppedImage] = useState<string | null>(null)
 
   const [, drop] = useDrop(() => ({
     accept: 'image',
-    drop: (item, monitor) => {
-      setDroppedImage(item.src)
+    drop: (item: { src: string } | null) => {
+      if (item) {
+        setDroppedImage(item.src)
+      }
     },
   }))
+
   const removeSelectedImage = () => {
-    console.log('deleteimage')
     setDroppedImage(null)
+    change(index, null)
   }
+
   return (
     <VStack ref={drop} style={styles.imageContainer}>
       {droppedImage ? (
@@ -26,6 +36,7 @@ const DropZone = () => {
             src={droppedImage}
             alt="Dropped content"
             style={styles.image}
+            onLoad={() => change(index, droppedImage)}
           />
         </>
       ) : (
