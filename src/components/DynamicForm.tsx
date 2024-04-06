@@ -70,14 +70,19 @@ function DynamicForm() {
   }
   return (
     <>
-      <VStack as="form" onSubmit={handleSubmit((e, data) => onSubmit(e, data))}>
+      <VStack
+        as="form"
+        onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
+        // style={{ height: '1500px', overflow: 'scroll' }}
+      >
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
             padding: '1px',
-            width: '95%',
             zIndex: 1000,
+            width: '90%',
             justifyContent: 'space-between',
+            // marginLeft: '25%',
           }}
           position="sticky"
           top="10"
@@ -118,7 +123,7 @@ function DynamicForm() {
               {chunk.map((f, fieldIndex) => {
                 const absoluteIndex = chunkIndex * 2 + fieldIndex
                 return (
-                  <VStack key={f.id} style={styles.container}>
+                  <VStack key={f.id} style={{ marginTop: '20px' }}>
                     <h5>{`No.${absoluteIndex}`}</h5>
                     <Icon
                       type="button"
@@ -142,22 +147,32 @@ function DynamicForm() {
                         )}
                       />
 
-                      <Input
-                        placeholder="name"
-                        {...register(`product.${absoluteIndex}.name` as const)}
-                        className={
-                          errors?.product?.[absoluteIndex]?.name ? 'error' : ''
-                        }
-                        defaultValue={f.name}
-                      />
-                      <Input
-                        placeholder="size"
-                        {...register(`product.${absoluteIndex}.size` as const)}
-                        className={
-                          errors?.product?.[absoluteIndex]?.size ? 'error' : ''
-                        }
-                        defaultValue={f.size}
-                      />
+                      <HStack>
+                        <Input
+                          placeholder="name"
+                          {...register(
+                            `product.${absoluteIndex}.name` as const,
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.name
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.name}
+                        />
+                        <Input
+                          placeholder="size"
+                          {...register(
+                            `product.${absoluteIndex}.size` as const,
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.size
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.size}
+                        />
+                      </HStack>
                       <HStack>
                         <Input
                           placeholder="tradePrice"
@@ -224,9 +239,8 @@ const styles: Record<string, CSSProperties> = {
   delete: {
     cursor: 'pointer',
     border: 'none',
-    marginTop: '10px',
-    marginLeft: '620px',
-    position: 'absolute',
+    marginLeft: '650px',
+    gap: '0px',
     color: 'red',
   },
 }
