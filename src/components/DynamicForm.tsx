@@ -3,8 +3,8 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
-
+import React, { useState } from 'react'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 function DynamicForm() {
   type ProductData = {
     product: {
@@ -13,14 +13,22 @@ function DynamicForm() {
       tradePrice: number
       retailPrice: number
       remark: string
-      image_id: string
+      image: File | string | null
     }[]
   }
-
+  const formTemplate = {
+    name: '',
+    size: '',
+    tradePrice: 0,
+    retailPrice: 0,
+    remark: '',
+    image: null,
+  }
   const {
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ProductData>({
     defaultValues: {
@@ -31,17 +39,19 @@ function DynamicForm() {
           tradePrice: 0,
           retailPrice: 0,
           remark: '',
-          image_id: '',
+          image: null,
         },
       ],
     },
     mode: 'onBlur',
   })
+  const [imageUpdated, setImageUpdated] = useState(false)
   const { fields, append, remove } = useFieldArray({
     name: 'product',
     control,
   })
-  const onSubmit = (data: ProductData) => console.log(data)
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) =>
+    console.log(e, data)
 
   function splitArrayIntoChunksOfTwo<T>(array: T[]): T[][] {
     return array.reduce((resultArray: T[][], item, index) => {
@@ -54,12 +64,21 @@ function DynamicForm() {
       return resultArray
     }, [])
   }
-  let index = -1
+  const handleImageChange = (index: number, src: string) => {
+    setValue(`product.${index}.image`, src)
+    setImageUpdated(!imageUpdated)
+  }
   return (
     <>
-      <VStack as="form" onSubmit={handleSubmit(onSubmit)}>
+      <VStack as="form" onSubmit={handleSubmit((e, data) => onSubmit(e, data))}>
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
+          style={{
+            padding: '1px',
+            width: '95%',
+            zIndex: 1000,
+            justifyContent: 'space-between',
+          }}
           position="sticky"
           top="10"
           marginLeft={30}
@@ -67,97 +86,123 @@ function DynamicForm() {
           <Icon
             type="button"
             onClick={() => {
-              append({
-                name: '',
-                size: '',
-                tradePrice: 0,
-                retailPrice: 0,
-                remark: '',
-                image_id: '',
-              })
+              append(formTemplate)
             }}
             icon={faPlus}
             size="2xl"
+            style={{
+              borderRadius: '100px',
+              backgroundColor: '#7bc0f9',
+              padding: '10px',
+              color: 'white',
+              cursor: 'pointer',
+            }}
           />
           <Input
             type="submit"
             value="submit"
             maxWidth="100"
-            colorScheme="primary"
+            style={{
+              backgroundColor: '#7bc0f9',
+              color: 'white',
+              cursor: 'pointer',
+              textAlign: 'center',
+              border: 0,
+            }}
           />
         </HStack>
 
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
           return (
             <div key={`chunk-${chunkIndex}`} className="page">
-              {chunk.map((field) => {
-                index++
+              {chunk.map((f, fieldIndex) => {
+                const absoluteIndex = chunkIndex * 2 + fieldIndex
                 return (
-                  <VStack key={field.id} style={styles.container}>
+                  <VStack key={f.id} style={styles.container}>
+                    <h5>{`No.${absoluteIndex}`}</h5>
                     <Icon
                       type="button"
-                      onClick={() => remove(index)}
+                      onClick={() => {
+                        remove(absoluteIndex)
+                      }}
                       style={styles.delete}
                       icon={faXmark}
                       size="2xl"
                       _media={[{ type: 'print', css: { display: 'none' } }]}
                     />
                     <VStack className="section">
-                      <ImageDrop />
+                      <Controller
+                        name={`product.${absoluteIndex}.image`}
+                        control={control}
+                        render={() => (
+                          <ImageDrop
+                            index={absoluteIndex}
+                            change={handleImageChange}
+                          />
+                        )}
+                      />
+
                       <Input
                         placeholder="name"
-                        {...register(`product.${index}.name` as const)}
+                        {...register(`product.${absoluteIndex}.name` as const)}
                         className={
-                          errors?.product?.[index]?.name ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.name ? 'error' : ''
                         }
-                        defaultValue={field.name}
+                        defaultValue={f.name}
                       />
                       <Input
                         placeholder="size"
-                        {...register(`product.${index}.size` as const)}
+                        {...register(`product.${absoluteIndex}.size` as const)}
                         className={
-                          errors?.product?.[index]?.size ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.size ? 'error' : ''
                         }
-                        defaultValue={field.size}
+                        defaultValue={f.size}
                       />
-                      <Input
-                        placeholder="value"
-                        type="number"
-                        {...register(`product.${index}.tradePrice` as const, {
-                          valueAsNumber: true,
-                        })}
-                        className={
-                          errors?.product?.[index]?.tradePrice ? 'error' : ''
-                        }
-                        defaultValue={field.tradePrice}
-                      />
-                      <Input
-                        placeholder="value"
-                        type="number"
-                        {...register(`product.${index}.retailPrice` as const, {
-                          valueAsNumber: true,
-                        })}
-                        className={
-                          errors?.product?.[index]?.retailPrice ? 'error' : ''
-                        }
-                        defaultValue={field.retailPrice}
-                      />
+                      <HStack>
+                        <Input
+                          placeholder="tradePrice"
+                          type="number"
+                          {...register(
+                            `product.${absoluteIndex}.tradePrice` as const,
+                            {
+                              valueAsNumber: true,
+                            },
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.tradePrice
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.tradePrice}
+                        />
+                        <Input
+                          placeholder="retailPrice"
+                          type="number"
+                          {...register(
+                            `product.${absoluteIndex}.retailPrice` as const,
+                            {
+                              valueAsNumber: true,
+                            },
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.retailPrice
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.retailPrice}
+                        />
+                      </HStack>
                       <Input
                         placeholder="remark"
-                        {...register(`product.${index}.remark` as const)}
+                        {...register(
+                          `product.${absoluteIndex}.remark` as const,
+                        )}
                         className={
-                          errors?.product?.[index]?.remark ? 'error' : ''
+                          errors?.product?.[absoluteIndex]?.remark
+                            ? 'error'
+                            : ''
                         }
-                        defaultValue={field.remark}
-                      />
-                      <Input
-                        placeholder="image_id"
-                        {...register(`product.${index}.image_id` as const)}
-                        className={
-                          errors?.product?.[index]?.image_id ? 'error' : ''
-                        }
-                        defaultValue={field.image_id}
-                        type="hidden"
+                        defaultValue={f.remark}
                       />
                     </VStack>
                   </VStack>

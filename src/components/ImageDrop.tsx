@@ -1,61 +1,17 @@
-import { faImage } from '@fortawesome/free-solid-svg-icons'
-import type { DropEvent, FileRejection } from '@yamada-ui/dropzone'
-import { Dropzone } from '@yamada-ui/dropzone'
-import { Icon } from '@yamada-ui/fontawesome'
-import { CloseIcon, Image, VStack } from '@yamada-ui/react'
+import DropZone from '@/components/DropZone'
+import { VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import React, { useState } from 'react'
-export default function ImageDrop() {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null)
-
-  const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files[0])
-    }
-  }
-
-  const imageDrop = (
-    acceptedFiles: File[],
-    _fileRejections: FileRejection[],
-    _event: DropEvent,
-  ) => {
-    if (acceptedFiles.length > 0) {
-      setSelectedImage(acceptedFiles[0])
-    }
-  }
-
-  const removeSelectedImage = () => {
-    setSelectedImage(null)
-  }
-
+export default function ImageDrop({ index, change }) {
   return (
     <>
-      <VStack style={styles.container}>
-        {selectedImage === null ? (
-          <Dropzone
-            style={styles.container}
-            onChange={imageChange}
-            onDrop={imageDrop}
-          >
-            <Icon icon={faImage} size="6xl" />
-          </Dropzone>
-        ) : (
-          <VStack style={styles.container}>
-            <CloseIcon onClick={removeSelectedImage} style={styles.delete} />
-            <Image
-              src={URL.createObjectURL(selectedImage)}
-              style={styles.image}
-              alt="product image"
-            />
-          </VStack>
-        )}
+      <VStack style={styles.imageContainer}>
+        <DropZone index={index} change={change} />
       </VStack>
     </>
   )
 }
-
 const styles: Record<string, CSSProperties> = {
-  container: {
+  imageContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -71,11 +27,11 @@ const styles: Record<string, CSSProperties> = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  delete: {
+  imageDelete: {
     cursor: 'pointer',
     border: 'none',
-    marginBottom: '370px',
-    marginLeft: '340px',
+    marginBottom: '230px',
+    marginLeft: '280px',
     position: 'absolute',
     color: 'red',
   },
