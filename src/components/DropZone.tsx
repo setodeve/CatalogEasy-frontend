@@ -12,7 +12,7 @@ const DropZone = ({
   change: (index: number, image: string | null) => void
 }) => {
   const [droppedImage, setDroppedImage] = useState<string | null>(null)
-
+  const [hover, setHover] = useState(false)
   const [, drop] = useDrop(() => ({
     accept: 'image',
     drop: (item: { src: string } | null) => {
@@ -28,9 +28,9 @@ const DropZone = ({
   }
 
   return (
-    <VStack ref={drop} style={styles.imageContainer}>
+    <>
       {droppedImage ? (
-        <>
+        <VStack ref={drop} style={styles.imageContainer}>
           <CloseIcon onClick={removeSelectedImage} style={styles.imageDelete} />
           <Image
             src={droppedImage}
@@ -38,12 +38,19 @@ const DropZone = ({
             style={styles.image}
             onLoad={() => change(index, droppedImage)}
           />
-        </>
+        </VStack>
       ) : (
-        <Icon icon={faImage} size="6xl" style={styles.noImage} />
+        <VStack
+          ref={drop}
+          style={hover ? styles.hoveredStyle : styles.imageContainer}
+          onDragEnter={() => setHover(true)}
+          onDrop={() => setHover(false)}
+          onDragLeave={() => setHover(false)}
+        >
+          <Icon icon={faImage} size="6xl" style={styles.noImage} />
+        </VStack>
       )}
-      Drop here
-    </VStack>
+    </>
   )
 }
 
@@ -78,5 +85,14 @@ const styles: Record<string, CSSProperties> = {
     position: 'relative',
     margin: 'auto',
     color: 'gray',
+  },
+  hoveredStyle: {
+    backgroundColor: '#fffff1',
+    color: 'white',
+    width: '100%',
+    height: '250px',
+    border: '1px dotted gray',
+    display: 'flex',
+    borderRadius: '10px',
   },
 }

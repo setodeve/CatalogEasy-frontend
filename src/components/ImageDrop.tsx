@@ -21,18 +21,4 @@ const styles: Record<string, CSSProperties> = {
     height: 250,
     margin: 'auto',
   },
-  image: {
-    width: 250,
-    height: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imageDelete: {
-    cursor: 'pointer',
-    border: 'none',
-    marginBottom: '230px',
-    marginLeft: '280px',
-    position: 'absolute',
-    color: 'red',
-  },
 }
