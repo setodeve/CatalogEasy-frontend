@@ -1,6 +1,6 @@
 import DynamicForm from '@/components/DynamicForm'
 import ImageSelection from '@/components/ImageSelection'
-import { HStack } from '@yamada-ui/react'
+import { Box, HStack } from '@yamada-ui/react'
 export default function Home() {
   return (
     <main>
@@ -10,9 +10,11 @@ export default function Home() {
         alt=""
       /> */}
       {/* <DynamicForm /> */}
-      <HStack>
+      <HStack className="myGrid">
         <DynamicForm />
-        <ImageSelection />
+        <Box className="hideInPrint">
+          <ImageSelection />
+        </Box>
       </HStack>
 
       {/* <div className="page">
