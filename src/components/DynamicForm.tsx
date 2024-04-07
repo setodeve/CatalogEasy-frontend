@@ -1,7 +1,7 @@
 import ImageDrop from '@/components/ImageDrop'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
-import { HStack, Input, VStack } from '@yamada-ui/react'
+import { Box, HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import React, { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
@@ -70,14 +70,33 @@ function DynamicForm() {
   }
   return (
     <>
-      <VStack as="form" onSubmit={handleSubmit((e, data) => onSubmit(e, data))}>
+      {/* TODO 別のcssの当て方がないか検討する*/}
+      <style>
+        {`
+        .printCatalog {
+            width: 50%;
+          }
+        @media print {
+          .printCatalog {
+            width: 100%;
+          }
+        }`}
+      </style>
+      <VStack
+        as="form"
+        onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
+        // style={styles.test}
+        // _media={[{ type: 'print', css: { width: '100%' } }]}
+        className="printCatalog"
+      >
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
             padding: '1px',
-            width: '95%',
             zIndex: 1000,
+            width: '50%',
             justifyContent: 'space-between',
+            marginLeft: '25%',
           }}
           position="sticky"
           top="10"
@@ -114,12 +133,12 @@ function DynamicForm() {
 
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
           return (
-            <div key={`chunk-${chunkIndex}`} className="page">
+            <Box key={`chunk-${chunkIndex}`} className="page">
               {chunk.map((f, fieldIndex) => {
                 const absoluteIndex = chunkIndex * 2 + fieldIndex
                 return (
-                  <VStack key={f.id} style={styles.container}>
-                    <h5>{`No.${absoluteIndex}`}</h5>
+                  <VStack key={f.id} style={{ marginTop: '20px' }}>
+                    <h5>{`No.${absoluteIndex + 1}`}</h5>
                     <Icon
                       type="button"
                       onClick={() => {
@@ -142,22 +161,32 @@ function DynamicForm() {
                         )}
                       />
 
-                      <Input
-                        placeholder="name"
-                        {...register(`product.${absoluteIndex}.name` as const)}
-                        className={
-                          errors?.product?.[absoluteIndex]?.name ? 'error' : ''
-                        }
-                        defaultValue={f.name}
-                      />
-                      <Input
-                        placeholder="size"
-                        {...register(`product.${absoluteIndex}.size` as const)}
-                        className={
-                          errors?.product?.[absoluteIndex]?.size ? 'error' : ''
-                        }
-                        defaultValue={f.size}
-                      />
+                      <HStack>
+                        <Input
+                          placeholder="name"
+                          {...register(
+                            `product.${absoluteIndex}.name` as const,
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.name
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.name}
+                        />
+                        <Input
+                          placeholder="size"
+                          {...register(
+                            `product.${absoluteIndex}.size` as const,
+                          )}
+                          className={
+                            errors?.product?.[absoluteIndex]?.size
+                              ? 'error'
+                              : ''
+                          }
+                          defaultValue={f.size}
+                        />
+                      </HStack>
                       <HStack>
                         <Input
                           placeholder="tradePrice"
@@ -208,7 +237,7 @@ function DynamicForm() {
                   </VStack>
                 )
               })}
-            </div>
+            </Box>
           )
         })}
       </VStack>
@@ -224,9 +253,8 @@ const styles: Record<string, CSSProperties> = {
   delete: {
     cursor: 'pointer',
     border: 'none',
-    marginTop: '10px',
-    marginLeft: '620px',
-    position: 'absolute',
+    marginLeft: '650px',
+    gap: '0px',
     color: 'red',
   },
 }

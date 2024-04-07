@@ -54,6 +54,15 @@ body {
   background: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+
+.myGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 5px;
+  grid-template-areas: ". .";
+}
+
 .subpage {
   padding: 1cm;
   border: 5px red solid;
@@ -70,6 +79,12 @@ body {
   body {
     width: 210mm;
     height: 297mm;
+    background-color: white;
+  }
+
+  .myGrid {
+    display: grid;
+    grid-template-columns: 1fr;
   }
   .page {
     margin: 0;

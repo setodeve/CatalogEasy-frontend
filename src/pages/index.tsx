@@ -1,6 +1,6 @@
-import DraggableImage from '@/components/draggableImage'
 import DynamicForm from '@/components/DynamicForm'
-import { HStack } from '@yamada-ui/react'
+import ImageSelection from '@/components/ImageSelection'
+import { Box, HStack } from '@yamada-ui/react'
 export default function Home() {
   return (
     <main>
@@ -10,24 +10,11 @@ export default function Home() {
         alt=""
       /> */}
       {/* <DynamicForm /> */}
-      <HStack>
-        <div>
-          <DynamicForm />
-        </div>
-        <div>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <DraggableImage
-              src="https://picsum.photos/id/237/200/300"
-              id="unique-id-1"
-            />
-          </div>
-          {/* <img id="drag-image" src="../public/test.png" alt="" />
-          <img
-            draggable="true"
-            src="https://picsum.photos/id/237/200/300"
-            alt=""
-          /> */}
-        </div>
+      <HStack className="myGrid">
+        <DynamicForm />
+        <Box className="hideInPrint">
+          <ImageSelection />
+        </Box>
       </HStack>
 
       {/* <div className="page">

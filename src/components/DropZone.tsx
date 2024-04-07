@@ -1,6 +1,6 @@
-import { faImage } from '@fortawesome/free-solid-svg-icons'
+import { faImage, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
-import { CloseIcon, Image, VStack } from '@yamada-ui/react'
+import { Image, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
 import { useDrop } from 'react-dnd'
@@ -31,7 +31,15 @@ const DropZone = ({
     <>
       {droppedImage ? (
         <VStack ref={drop} style={styles.imageContainer}>
-          <CloseIcon onClick={removeSelectedImage} style={styles.imageDelete} />
+          {/* <CloseIcon onClick={removeSelectedImage} style={styles.imageDelete} /> */}
+          <Icon
+            onClick={removeSelectedImage}
+            style={styles.imageDelete}
+            icon={faXmark}
+            size="2xl"
+            _media={[{ type: 'print', css: { display: 'none' } }]}
+          />
+
           <Image
             src={droppedImage}
             alt="Dropped content"
@@ -59,11 +67,11 @@ export default DropZone
 const styles: Record<string, CSSProperties> = {
   imageContainer: {
     width: '100%',
-    height: '250px',
+    height: '260px',
     border: '1px dotted gray',
     display: 'flex',
     backgroundColor: 'lightgray',
-    borderRadius: '10px',
+    borderRadius: '15px',
   },
   image: {
     width: '100%',
@@ -72,6 +80,8 @@ const styles: Record<string, CSSProperties> = {
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    // marginTop: '-270px',
+    // borderRadius: '10px',
   },
   imageDelete: {
     cursor: 'pointer',
