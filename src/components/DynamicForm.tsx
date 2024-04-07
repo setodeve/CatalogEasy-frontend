@@ -1,7 +1,7 @@
 import ImageDrop from '@/components/ImageDrop'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
-import { HStack, Input, VStack } from '@yamada-ui/react'
+import { Box, HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import React, { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
@@ -70,19 +70,33 @@ function DynamicForm() {
   }
   return (
     <>
+      {/* TODO 別のcssの当て方がないか検討する*/}
+      <style>
+        {`
+        .printCatalog {
+            width: 50%;
+          }
+        @media print {
+          .printCatalog {
+            width: 100%;
+          }
+        }`}
+      </style>
       <VStack
         as="form"
         onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
-        // style={{ height: '1500px', overflow: 'scroll' }}
+        // style={styles.test}
+        // _media={[{ type: 'print', css: { width: '100%' } }]}
+        className="printCatalog"
       >
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
             padding: '1px',
             zIndex: 1000,
-            width: '90%',
+            width: '50%',
             justifyContent: 'space-between',
-            // marginLeft: '25%',
+            marginLeft: '25%',
           }}
           position="sticky"
           top="10"
@@ -119,12 +133,12 @@ function DynamicForm() {
 
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
           return (
-            <div key={`chunk-${chunkIndex}`} className="page">
+            <Box key={`chunk-${chunkIndex}`} className="page">
               {chunk.map((f, fieldIndex) => {
                 const absoluteIndex = chunkIndex * 2 + fieldIndex
                 return (
                   <VStack key={f.id} style={{ marginTop: '20px' }}>
-                    <h5>{`No.${absoluteIndex}`}</h5>
+                    <h5>{`No.${absoluteIndex + 1}`}</h5>
                     <Icon
                       type="button"
                       onClick={() => {
@@ -223,7 +237,7 @@ function DynamicForm() {
                   </VStack>
                 )
               })}
-            </div>
+            </Box>
           )
         })}
       </VStack>
