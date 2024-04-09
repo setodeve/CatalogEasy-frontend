@@ -1,7 +1,12 @@
 import DropZone from '@/components/DropZone'
 import { VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-export default function ImageDrop({ index, change }) {
+interface ImageDropProps {
+  index: number
+  change: (index: number) => void
+}
+
+export default function ImageDrop({ index, change }: ImageDropProps) {
   return (
     <>
       <VStack style={styles.imageContainer}>

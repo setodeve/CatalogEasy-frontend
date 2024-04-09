@@ -1,7 +1,7 @@
 import { Image } from '@yamada-ui/react'
 import type { CSSProperties, LegacyRef } from 'react'
 import { useDrag } from 'react-dnd'
-const DraggableImage = ({ src, id }) => {
+const DraggableImage = ({ src, id }: { src: string; id: string }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'image',
     item: { id, src },
