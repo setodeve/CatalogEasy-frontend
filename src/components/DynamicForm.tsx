@@ -5,6 +5,7 @@ import { Box, HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import React, { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
+
 function DynamicForm() {
   type ProductData = {
     product: {
