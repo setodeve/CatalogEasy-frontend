@@ -31,10 +31,11 @@ export default function ImageUpload() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
+
     selectedFiles.forEach((file) => {
-      formData.append('images', file)
+      formData.append('image[]', file)
     })
-    console.log(selectedFiles)
+    console.log(formData)
     fetch(`http://0.0.0.0:8080/api/product_images`, {
       method: 'POST',
       body: formData,
