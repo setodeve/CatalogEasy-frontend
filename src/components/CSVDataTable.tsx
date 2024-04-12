@@ -1,30 +1,44 @@
 import { Box, Button, Modal, ModalBody, useDisclosure } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
+
+// CSVの行データを扱う型定義
+interface CSVData {
+  name: string
+  size: string
+  tradePrice: number
+  retailPrice: number
+  remark: string | null
+  image: string | null
+}
+
 export default function CSVDataTable() {
-  const [uploadedList, setUploadedList] = useState()
+  const [uploadedList, setUploadedList] = useState<CSVData[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const handleUploadCsv = (data: any) => {
-    const _formattedData = data
-      .map((d: any) => {
-        return {
-          name: d[0],
-          size: d[1],
-          tradePrice: d[2],
-          retailPrice: d[3],
-          remark: null,
-          image: null,
-        }
-      })
-      .filter((d: any) => d != null)
+  const handleUploadCsv = (data: string[][]) => {
+    const formattedData = data
+      .map((row) => ({
+        name: row[0],
+        size: row[1],
+        tradePrice: parseFloat(row[2]),
+        retailPrice: parseFloat(row[3]),
+        remark: null,
+        image: null,
+      }))
+      .filter((d) => d.name && d.size)
 
-    setUploadedList(_formattedData)
+    setUploadedList(formattedData)
   }
 
   const handleOnImport = async () => {
-    console.log(uploadedList)
+    try {
+      console.log('Importing:', uploadedList)
+    } catch (error) {
+      console.error('Error importing data:', error)
+    }
   }
+
   return (
     <>
       {isOpen ? (
@@ -34,7 +48,14 @@ export default function CSVDataTable() {
               <CSVReader setUploadedData={handleUploadCsv} />
             </Box>
             <Box>
-              <Button onClick={() => handleOnImport()}>インポート実行</Button>
+              <Button
+                onClick={() => {
+                  handleOnImport()
+                  onClose()
+                }}
+              >
+                インポート実行
+              </Button>
             </Box>
           </ModalBody>
         </Modal>
