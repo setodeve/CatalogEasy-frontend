@@ -6,7 +6,6 @@ import React, { useState } from 'react'
 export default function ImageUpload() {
   const [imgsSrc, setImgsSrc] = useState<string[]>([])
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files)
@@ -28,6 +27,18 @@ export default function ImageUpload() {
     }
   }
 
+  // const showImageInModal = (imageUrls: string[]) => {
+  //   return (
+  //     <>
+  //       {imageUrls.map((url, i) => (
+  //         <Modal isOpen={isOpen} onClose={onClose} key={i}>
+  //           <Image src={url} alt="image" />
+  //         </Modal>
+  //       ))}
+  //     </>
+  //   )
+  // }
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData()
@@ -35,7 +46,7 @@ export default function ImageUpload() {
     selectedFiles.forEach((file) => {
       formData.append('image[]', file)
     })
-    console.log(formData)
+
     fetch(`http://0.0.0.0:8080/api/product_images`, {
       method: 'POST',
       body: formData,
@@ -97,14 +108,18 @@ export default function ImageUpload() {
           marginTop: 20,
         }}
       >
-        {imgsSrc.map((link, index) => (
-          <Image
-            key={index}
-            src={link}
-            alt={'image' + index}
-            style={{ width: 200, height: 300 }}
-          />
-        ))}
+        {imgsSrc
+          ? imgsSrc.map((link, index) => (
+              <Image
+                key={index}
+                src={link}
+                alt={'image' + index}
+                w="300"
+                h="300"
+                style={{ objectFit: 'cover' }}
+              />
+            ))
+          : null}
       </HStack>
     </>
   )
