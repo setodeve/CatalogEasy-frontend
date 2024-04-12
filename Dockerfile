@@ -18,6 +18,7 @@ COPY next-env.d.ts .
 COPY postcss.config.js .
 COPY tailwind.config.ts .
 COPY .eslintrc.json .
+COPY .env.* .
 
 CMD \
   if [ -f yarn.lock ]; then yarn dev; \
