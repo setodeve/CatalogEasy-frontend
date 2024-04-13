@@ -1,3 +1,4 @@
+import CSVDataTable from '@/components/CSVDataTable'
 import ImageDrop from '@/components/ImageDrop'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
@@ -94,7 +95,6 @@ function DynamicForm() {
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
             padding: '1px',
-            zIndex: 1000,
             width: '50%',
             justifyContent: 'space-between',
             marginLeft: '25%',
@@ -116,8 +116,15 @@ function DynamicForm() {
               padding: '10px',
               color: 'white',
               cursor: 'pointer',
+              zIndex: 1000,
             }}
           />
+          <Controller
+            name="product"
+            control={control}
+            render={() => <CSVDataTable append={append} />}
+          />
+          {/* <CSVDataTable append={(a) => append(a)} /> */}
           <Input
             type="submit"
             value="submit"
@@ -128,6 +135,7 @@ function DynamicForm() {
               cursor: 'pointer',
               textAlign: 'center',
               border: 0,
+              zIndex: 1000,
             }}
           />
         </HStack>

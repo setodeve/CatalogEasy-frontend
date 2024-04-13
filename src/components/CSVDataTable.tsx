@@ -1,8 +1,14 @@
-import { Box, Button, Modal, ModalBody, useDisclosure } from '@yamada-ui/react'
+import {
+  Box,
+  Button,
+  Modal,
+  ModalBody,
+  ModalOverlay,
+  useDisclosure,
+} from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
 
-// CSVの行データを扱う型定義
 interface CSVData {
   name: string
   size: string
@@ -12,7 +18,11 @@ interface CSVData {
   image: string | null
 }
 
-export default function CSVDataTable() {
+export default function CSVDataTable({
+  append,
+}: {
+  append: (data: CSVData[]) => void
+}) {
   const [uploadedList, setUploadedList] = useState<CSVData[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -29,38 +39,36 @@ export default function CSVDataTable() {
       .filter((d) => d.name && d.size)
 
     setUploadedList(formattedData)
-  }
-
-  const handleOnImport = async () => {
-    try {
-      console.log('Importing:', uploadedList)
-    } catch (error) {
-      console.error('Error importing data:', error)
-    }
+    append(formattedData)
+    onClose()
   }
 
   return (
     <>
       {isOpen ? (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} style={{ zIndex: 2000 }}>
+          <ModalOverlay
+            bg="blackAlpha.300"
+            backdropFilter="blur(10px)"
+            style={{ zIndex: 2000 }}
+          />
           <ModalBody>
             <Box>
               <CSVReader setUploadedData={handleUploadCsv} />
             </Box>
-            <Box>
-              <Button
-                onClick={() => {
-                  handleOnImport()
-                  onClose()
-                }}
-              >
-                インポート実行
-              </Button>
-            </Box>
           </ModalBody>
         </Modal>
       ) : (
-        <Button onClick={onOpen}>Open Modal</Button>
+        <Button
+          onClick={onOpen}
+          style={{
+            backgroundColor: '#7bc0f9',
+            color: 'white',
+            padding: '10px',
+          }}
+        >
+          Import CSV
+        </Button>
       )}
     </>
   )
