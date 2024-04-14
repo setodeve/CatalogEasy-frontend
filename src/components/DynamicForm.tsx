@@ -16,6 +16,7 @@ function DynamicForm() {
       retailPrice: number
       remark: string
       image: File | string | null
+      imageId: string | null
     }[]
   }
   const formTemplate = {
@@ -25,6 +26,7 @@ function DynamicForm() {
     retailPrice: 0,
     remark: '',
     image: null,
+    imageId: null,
   }
   const {
     register,
@@ -34,16 +36,7 @@ function DynamicForm() {
     formState: { errors },
   } = useForm<ProductData>({
     defaultValues: {
-      product: [
-        {
-          name: '',
-          size: '',
-          tradePrice: 0,
-          retailPrice: 0,
-          remark: '',
-          image: null,
-        },
-      ],
+      product: [formTemplate],
     },
     mode: 'onBlur',
   })
@@ -66,8 +59,9 @@ function DynamicForm() {
       return resultArray
     }, [])
   }
-  const handleImageChange = (index: number, src: string) => {
+  const handleImageChange = (index: number, src: string, id: string) => {
     setValue(`product.${index}.image`, src)
+    setValue(`product.${index}.imageId`, id)
     setImageUpdated(!imageUpdated)
   }
   return (
@@ -98,6 +92,7 @@ function DynamicForm() {
             width: '50%',
             justifyContent: 'space-between',
             marginLeft: '25%',
+            zIndex: 1000,
           }}
           position="sticky"
           top="10"
@@ -116,7 +111,6 @@ function DynamicForm() {
               padding: '10px',
               color: 'white',
               cursor: 'pointer',
-              zIndex: 1000,
             }}
           />
           <Controller
@@ -124,7 +118,6 @@ function DynamicForm() {
             control={control}
             render={() => <CSVDataTable append={append} />}
           />
-          {/* <CSVDataTable append={(a) => append(a)} /> */}
           <Input
             type="submit"
             value="submit"
@@ -135,7 +128,6 @@ function DynamicForm() {
               cursor: 'pointer',
               textAlign: 'center',
               border: 0,
-              zIndex: 1000,
             }}
           />
         </HStack>

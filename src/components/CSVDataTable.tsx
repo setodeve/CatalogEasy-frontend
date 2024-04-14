@@ -35,6 +35,7 @@ export default function CSVDataTable({
         retailPrice: parseFloat(row[3]),
         remark: null,
         image: null,
+        imageId: null,
       }))
       .filter((d) => d.name && d.size)
 
@@ -47,11 +48,7 @@ export default function CSVDataTable({
     <>
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={onClose} style={{ zIndex: 2000 }}>
-          <ModalOverlay
-            bg="blackAlpha.300"
-            backdropFilter="blur(10px)"
-            style={{ zIndex: 2000 }}
-          />
+          <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
           <ModalBody>
             <Box>
               <CSVReader setUploadedData={handleUploadCsv} />
