@@ -40,6 +40,11 @@ body {
   background-color: #fafafa;
   font: 12pt "Tahoma";
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
