@@ -4,6 +4,8 @@ import {
   Button,
   Modal,
   ModalBody,
+  ModalCloseButton,
+  ModalHeader,
   ModalOverlay,
   useDisclosure,
 } from '@yamada-ui/react'
@@ -15,7 +17,7 @@ export default function CSVDataTable({
 }: {
   append: (data: CSVData[]) => void
 }) {
-  const [uploadedList, setUploadedList] = useState<CSVData[]>([])
+  const [_, setUploadedList] = useState<CSVData[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleUploadCsv = (data: string[][]) => {
@@ -38,27 +40,28 @@ export default function CSVDataTable({
 
   return (
     <>
+      <Button
+        onClick={onOpen}
+        style={{
+          backgroundColor: '#7bc0f9',
+          color: 'white',
+          padding: '10px',
+        }}
+      >
+        Import CSV
+      </Button>
       {isOpen ? (
-        <Modal isOpen={isOpen} onClose={onClose} style={{ zIndex: 2000 }}>
-          <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <ModalCloseButton color="red.500" />
+          <ModalOverlay bg="blackAlpha.500" backdropFilter="blur(10px)" />
+          <ModalHeader>Import CSV</ModalHeader>
           <ModalBody>
             <Box>
               <CSVReader setUploadedData={handleUploadCsv} />
             </Box>
           </ModalBody>
         </Modal>
-      ) : (
-        <Button
-          onClick={onOpen}
-          style={{
-            backgroundColor: '#7bc0f9',
-            color: 'white',
-            padding: '10px',
-          }}
-        >
-          Import CSV
-        </Button>
-      )}
+      ) : null}
     </>
   )
 }
