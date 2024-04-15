@@ -1,5 +1,6 @@
 import CSVDataTable from '@/components/CSVDataTable'
 import ImageDrop from '@/components/ImageDrop'
+import type { ProductData } from '@/types/product'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { Box, HStack, Input, VStack } from '@yamada-ui/react'
@@ -7,18 +8,7 @@ import type { CSSProperties } from 'react'
 import React, { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
-function DynamicForm() {
-  type ProductData = {
-    product: {
-      name: string
-      size: string
-      tradePrice: number
-      retailPrice: number
-      remark: string
-      image: File | string | null
-      imageId: string | null
-    }[]
-  }
+export default function DynamicForm() {
   const formTemplate = {
     name: '',
     size: '',
@@ -48,7 +38,7 @@ function DynamicForm() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) =>
     console.log(e, data)
 
-  function splitArrayIntoChunksOfTwo<T>(array: T[]): T[][] {
+  const splitArrayIntoChunksOfTwo = <T,>(array: T[]): T[][] => {
     return array.reduce((resultArray: T[][], item, index) => {
       const chunkIndex = Math.floor(index / 2)
       if (!resultArray[chunkIndex]) {
@@ -59,6 +49,7 @@ function DynamicForm() {
       return resultArray
     }, [])
   }
+
   const handleImageChange = (index: number, src: string, id: string) => {
     setValue(`product.${index}.image`, src)
     setValue(`product.${index}.imageId`, id)
@@ -246,7 +237,6 @@ function DynamicForm() {
   )
 }
 
-export default DynamicForm
 const styles: Record<string, CSSProperties> = {
   container: {
     margin: '0 auto',

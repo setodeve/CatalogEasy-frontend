@@ -1,3 +1,4 @@
+import type { CSVData } from '@/types/csv-data-table'
 import {
   Box,
   Button,
@@ -8,15 +9,6 @@ import {
 } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
-
-interface CSVData {
-  name: string
-  size: string
-  tradePrice: number
-  retailPrice: number
-  remark: string | null
-  image: string | null
-}
 
 export default function CSVDataTable({
   append,
