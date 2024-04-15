@@ -1,4 +1,6 @@
 import type { CSVData } from '@/types/csv-data-table'
+import { faFileImport } from '@fortawesome/free-solid-svg-icons'
+import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import {
   Box,
   Button,
@@ -11,7 +13,6 @@ import {
 } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
-
 export default function CSVDataTable({
   append,
 }: {
@@ -42,11 +43,12 @@ export default function CSVDataTable({
     <>
       <Button
         onClick={onOpen}
+        colorScheme="sky"
+        size="xl"
         style={{
-          backgroundColor: '#7bc0f9',
-          color: 'white',
           padding: '10px',
         }}
+        leftIcon={<FontAwesomeIcon icon={faFileImport} />}
       >
         Import CSV
       </Button>

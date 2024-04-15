@@ -1,5 +1,9 @@
 import ConfirmForm from '@/components/ConfirmForm'
-import { faCheck, faWrench } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCheck,
+  faCircleCheck,
+  faWrench,
+} from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import {
   Button,
@@ -22,13 +26,12 @@ export default function Catalog({ productInfo }) {
     <>
       <Button
         onClick={onOpen}
-        size="2xl"
+        colorScheme="sky"
+        size="xl"
         style={{
-          backgroundColor: '#7bc0f9',
           padding: '10px',
-          color: 'white',
-          cursor: 'pointer',
         }}
+        leftIcon={<FontAwesomeIcon icon={faCircleCheck} />}
       >
         確認する
       </Button>
@@ -56,7 +59,7 @@ export default function Catalog({ productInfo }) {
             </HStack>
           </VStack>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody style={{ backgroundColor: 'inherit' }}>
           <ConfirmForm productInfo={productInfo} />
         </ModalBody>
       </Modal>

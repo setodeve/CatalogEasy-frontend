@@ -4,12 +4,11 @@ import ImageDrop from '@/components/ImageDrop'
 import type { ProductData } from '@/types/product'
 import { splitArrayIntoChunksOfTwo } from '@/utils/productInfo'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { Icon } from '@yamada-ui/fontawesome'
-import { Box, HStack, Input, VStack } from '@yamada-ui/react'
+import { Icon as FontAwesomeIcon, Icon } from '@yamada-ui/fontawesome'
+import { Box, Button, HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import React, { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
-
 export default function DynamicForm() {
   const formTemplate = {
     name: '',
@@ -71,29 +70,23 @@ export default function DynamicForm() {
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
-            padding: '1px',
             width: '50%',
             justifyContent: 'space-between',
-            marginLeft: '25%',
             zIndex: 1,
+            margin: '0 auto',
           }}
           position="sticky"
-          top="10"
-          marginLeft={30}
+          top="7"
         >
-          <Icon
-            type="button"
+          <Button
             onClick={() => {
               append(formTemplate)
             }}
-            icon={faPlus}
-            size="2xl"
+            leftIcon={<FontAwesomeIcon icon={faPlus} />}
+            colorScheme="sky"
             style={{
               borderRadius: '100px',
-              backgroundColor: '#7bc0f9',
               padding: '10px',
-              color: 'white',
-              cursor: 'pointer',
             }}
           />
           <Controller
