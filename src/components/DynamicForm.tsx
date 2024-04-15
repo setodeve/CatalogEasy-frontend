@@ -1,6 +1,8 @@
 import CSVDataTable from '@/components/CSVDataTable'
+import Catalog from '@/components/Catalog'
 import ImageDrop from '@/components/ImageDrop'
 import type { ProductData } from '@/types/product'
+import { splitArrayIntoChunksOfTwo } from '@/utils/productInfo'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { Box, HStack, Input, VStack } from '@yamada-ui/react'
@@ -22,6 +24,7 @@ export default function DynamicForm() {
     register,
     control,
     handleSubmit,
+    getValues,
     setValue,
     formState: { errors },
   } = useForm<ProductData>({
@@ -35,19 +38,8 @@ export default function DynamicForm() {
     name: 'product',
     control,
   })
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) =>
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) => {
     console.log(e, data)
-
-  const splitArrayIntoChunksOfTwo = <T,>(array: T[]): T[][] => {
-    return array.reduce((resultArray: T[][], item, index) => {
-      const chunkIndex = Math.floor(index / 2)
-      if (!resultArray[chunkIndex]) {
-        resultArray[chunkIndex] = []
-      }
-      resultArray[chunkIndex].push(item)
-
-      return resultArray
-    }, [])
   }
 
   const handleImageChange = (index: number, src: string, id: string) => {
@@ -83,7 +75,7 @@ export default function DynamicForm() {
             width: '50%',
             justifyContent: 'space-between',
             marginLeft: '25%',
-            zIndex: 1000,
+            zIndex: 1,
           }}
           position="sticky"
           top="10"
@@ -109,7 +101,7 @@ export default function DynamicForm() {
             control={control}
             render={() => <CSVDataTable append={append} />}
           />
-          <Input
+          {/* <Input
             type="submit"
             value="submit"
             maxWidth="100"
@@ -120,7 +112,8 @@ export default function DynamicForm() {
               textAlign: 'center',
               border: 0,
             }}
-          />
+          /> */}
+          <Catalog productInfo={getValues('product')} />
         </HStack>
 
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
