@@ -7,7 +7,7 @@ import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon, Icon } from '@yamada-ui/fontawesome'
 import { Box, Button, HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 export default function DynamicForm() {
   const formTemplate = {
@@ -22,7 +22,7 @@ export default function DynamicForm() {
   const {
     register,
     control,
-    handleSubmit,
+    // handleSubmit,
     getValues,
     setValue,
     formState: { errors },
@@ -37,9 +37,9 @@ export default function DynamicForm() {
     name: 'product',
     control,
   })
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) => {
-    console.log(e, data)
-  }
+  // const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) => {
+  //   console.log(e, data)
+  // }
 
   const handleImageChange = (index: number, src: string, id: string) => {
     setValue(`product.${index}.image`, src)
@@ -62,7 +62,7 @@ export default function DynamicForm() {
       </style>
       <VStack
         as="form"
-        onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
+        // onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
         // style={styles.test}
         // _media={[{ type: 'print', css: { width: '100%' } }]}
         className="printCatalog"

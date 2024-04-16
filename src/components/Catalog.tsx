@@ -1,4 +1,5 @@
 import ConfirmForm from '@/components/ConfirmForm'
+import type { ProductData } from '@/types/product'
 import {
   faCheck,
   faCircleCheck,
@@ -21,6 +22,10 @@ export default function Catalog({ productInfo }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   if (productInfo == null) {
     return null
+  }
+
+  const onSubmit = (data: ProductData) => {
+    console.log(data)
   }
 
   return (
@@ -53,6 +58,7 @@ export default function Catalog({ productInfo }) {
                 修正する
               </Button>
               <Button
+                onClick={() => onSubmit(productInfo)}
                 colorScheme="sky"
                 rightIcon={<FontAwesomeIcon icon={faCheck} />}
               >
