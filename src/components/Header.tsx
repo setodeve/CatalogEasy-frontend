@@ -1,11 +1,14 @@
 import { Box, Button, HStack, Heading, Image } from '@yamada-ui/react'
+import { useRouter } from 'next/router'
 import type { CSSProperties } from 'react'
+
 export default function Header() {
+  const router = useRouter()
   const styles: Record<string, CSSProperties> = {
     container: {
       padding: '5px 0 0 0',
       // margin: '0 auto',
-      width: '50%',
+      width: router.pathname === '/' ? '50%' : '100%',
       height: '70px',
       display: 'fixed',
       color: 'white',
