@@ -1,15 +1,13 @@
 import DraggableImage from '@/components/DraggableImage'
 import type { ImageSelectionData } from '@/types/image-selection'
-import { apiRequest } from '@/utils/apiClient'
+import { fetchImageData } from '@/utils/fetchData'
 import { Box, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 
 const ImageSelection = () => {
   const [images, setImages] = useState<ImageSelectionData | null>(null)
-  const fetchImageData = async () => {
-    return apiRequest<ImageData>('GET', `/product_images`)
-  }
+
   const handleImageClick = (url: string) => {
     window.open(url, '_blank')
   }
