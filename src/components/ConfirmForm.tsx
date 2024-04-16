@@ -19,7 +19,7 @@ export default function ConfirmForm({ productInfo }) {
           }
         }`}
       </style>
-      <VStack className="printCatalog" style={{ margin: '0 auto' }}>
+      <VStack className="printCatalog" style={{}}>
         {splitArrayIntoChunksOfTwo(productInfo).map((chunk, chunkIndex) => {
           return (
             <Box key={`chunk-${chunkIndex}`} className="page">

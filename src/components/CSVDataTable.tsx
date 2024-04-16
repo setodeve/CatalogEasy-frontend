@@ -55,9 +55,9 @@ export default function CSVDataTable({
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalCloseButton color="red.500" />
-          <ModalOverlay bg="blackAlpha.500" backdropFilter="blur(10px)" />
+          <ModalOverlay backdropFilter="blur(10px)" />
           <ModalHeader>Import CSV</ModalHeader>
-          <ModalBody>
+          <ModalBody bg="white">
             <Box>
               <CSVReader setUploadedData={handleUploadCsv} />
             </Box>

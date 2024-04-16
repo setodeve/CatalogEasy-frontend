@@ -11,6 +11,7 @@ import {
   Heading,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalHeader,
   ModalOverlay,
   VStack,
@@ -36,11 +37,12 @@ export default function Catalog({ productInfo }) {
         確認する
       </Button>
 
-      <Modal isOpen={isOpen} size="full" bg="blackAlpha.500">
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+        <ModalCloseButton style={{ opacity: 0 }} isDisabled />
         <ModalOverlay backdropFilter="blur(10px)" />
         <ModalHeader style={{ margin: 'auto' }}>
           <VStack>
-            <Heading as="h4" size="md" color="white" isTruncated>
+            <Heading as="h4" size="md" isTruncated>
               以下は印刷時のイメージです。問題ないこと確認してください。
             </Heading>
             <HStack style={{ margin: 'auto' }}>
@@ -59,7 +61,12 @@ export default function Catalog({ productInfo }) {
             </HStack>
           </VStack>
         </ModalHeader>
-        <ModalBody style={{ backgroundColor: 'inherit' }}>
+        <ModalBody
+          style={{
+            backgroundColor: 'inherit',
+            margin: 'auto',
+          }}
+        >
           <ConfirmForm productInfo={productInfo} />
         </ModalBody>
       </Modal>
