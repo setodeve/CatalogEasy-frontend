@@ -73,10 +73,10 @@ export default function DynamicForm() {
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
-            width: '50%',
-            justifyContent: 'space-between',
+            width: '120%',
+            // justifyContent: 'space-between',
             zIndex: 1,
-            margin: '20px auto 0 auto',
+            margin: '20px 20px',
           }}
           position="sticky"
           top="7"
@@ -111,7 +111,6 @@ export default function DynamicForm() {
           /> */}
           <Catalog productInfo={getValues('product')} />
         </HStack>
-
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
           return (
             <Box key={`chunk-${chunkIndex}`} className="page">
