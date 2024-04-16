@@ -1,29 +1,24 @@
+import type { CSVData } from '@/types/csv-data-table'
+import { faFileImport } from '@fortawesome/free-solid-svg-icons'
+import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import {
   Box,
   Button,
   Modal,
   ModalBody,
+  ModalCloseButton,
+  ModalHeader,
   ModalOverlay,
   useDisclosure,
 } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
-
-interface CSVData {
-  name: string
-  size: string
-  tradePrice: number
-  retailPrice: number
-  remark: string | null
-  image: string | null
-}
-
 export default function CSVDataTable({
   append,
 }: {
   append: (data: CSVData[]) => void
 }) {
-  const [uploadedList, setUploadedList] = useState<CSVData[]>([])
+  const [_, setUploadedList] = useState<CSVData[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleUploadCsv = (data: string[][]) => {
@@ -35,6 +30,7 @@ export default function CSVDataTable({
         retailPrice: parseFloat(row[3]),
         remark: null,
         image: null,
+        imageId: null,
       }))
       .filter((d) => d.name && d.size)
 
@@ -45,31 +41,29 @@ export default function CSVDataTable({
 
   return (
     <>
+      <Button
+        onClick={onOpen}
+        colorScheme="sky"
+        size="xl"
+        style={{
+          padding: '10px',
+        }}
+        leftIcon={<FontAwesomeIcon icon={faFileImport} />}
+      >
+        Import CSV
+      </Button>
       {isOpen ? (
-        <Modal isOpen={isOpen} onClose={onClose} style={{ zIndex: 2000 }}>
-          <ModalOverlay
-            bg="blackAlpha.300"
-            backdropFilter="blur(10px)"
-            style={{ zIndex: 2000 }}
-          />
-          <ModalBody>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <ModalCloseButton color="red.500" />
+          <ModalOverlay backdropFilter="blur(10px)" />
+          <ModalHeader>Import CSV</ModalHeader>
+          <ModalBody bg="white">
             <Box>
               <CSVReader setUploadedData={handleUploadCsv} />
             </Box>
           </ModalBody>
         </Modal>
-      ) : (
-        <Button
-          onClick={onOpen}
-          style={{
-            backgroundColor: '#7bc0f9',
-            color: 'white',
-            padding: '10px',
-          }}
-        >
-          Import CSV
-        </Button>
-      )}
+      ) : null}
     </>
   )
 }

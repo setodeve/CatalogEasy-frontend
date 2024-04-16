@@ -1,23 +1,15 @@
 import CSVDataTable from '@/components/CSVDataTable'
+import Catalog from '@/components/Catalog'
 import ImageDrop from '@/components/ImageDrop'
+import type { ProductData } from '@/types/product'
+import { splitArrayIntoChunksOfTwo } from '@/utils/productInfo'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { Icon } from '@yamada-ui/fontawesome'
-import { Box, HStack, Input, VStack } from '@yamada-ui/react'
+import { Icon as FontAwesomeIcon, Icon } from '@yamada-ui/fontawesome'
+import { Box, Button, HStack, Input, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
-
-function DynamicForm() {
-  type ProductData = {
-    product: {
-      name: string
-      size: string
-      tradePrice: number
-      retailPrice: number
-      remark: string
-      image: File | string | null
-    }[]
-  }
+export default function DynamicForm() {
   const formTemplate = {
     name: '',
     size: '',
@@ -25,25 +17,18 @@ function DynamicForm() {
     retailPrice: 0,
     remark: '',
     image: null,
+    imageId: null,
   }
   const {
     register,
     control,
-    handleSubmit,
+    // handleSubmit,
+    getValues,
     setValue,
     formState: { errors },
   } = useForm<ProductData>({
     defaultValues: {
-      product: [
-        {
-          name: '',
-          size: '',
-          tradePrice: 0,
-          retailPrice: 0,
-          remark: '',
-          image: null,
-        },
-      ],
+      product: [formTemplate],
     },
     mode: 'onBlur',
   })
@@ -52,22 +37,13 @@ function DynamicForm() {
     name: 'product',
     control,
   })
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) =>
-    console.log(e, data)
+  // const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) => {
+  //   console.log(e, data)
+  // }
 
-  function splitArrayIntoChunksOfTwo<T>(array: T[]): T[][] {
-    return array.reduce((resultArray: T[][], item, index) => {
-      const chunkIndex = Math.floor(index / 2)
-      if (!resultArray[chunkIndex]) {
-        resultArray[chunkIndex] = []
-      }
-      resultArray[chunkIndex].push(item)
-
-      return resultArray
-    }, [])
-  }
-  const handleImageChange = (index: number, src: string) => {
+  const handleImageChange = (index: number, src: string, id: string) => {
     setValue(`product.${index}.image`, src)
+    setValue(`product.${index}.imageId`, id)
     setImageUpdated(!imageUpdated)
   }
   return (
@@ -86,7 +62,7 @@ function DynamicForm() {
       </style>
       <VStack
         as="form"
-        onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
+        // onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
         // style={styles.test}
         // _media={[{ type: 'print', css: { width: '100%' } }]}
         className="printCatalog"
@@ -94,29 +70,23 @@ function DynamicForm() {
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
-            padding: '1px',
             width: '50%',
             justifyContent: 'space-between',
-            marginLeft: '25%',
+            zIndex: 1,
+            margin: '0 auto',
           }}
           position="sticky"
-          top="10"
-          marginLeft={30}
+          top="7"
         >
-          <Icon
-            type="button"
+          <Button
             onClick={() => {
               append(formTemplate)
             }}
-            icon={faPlus}
-            size="2xl"
+            leftIcon={<FontAwesomeIcon icon={faPlus} />}
+            colorScheme="sky"
             style={{
               borderRadius: '100px',
-              backgroundColor: '#7bc0f9',
               padding: '10px',
-              color: 'white',
-              cursor: 'pointer',
-              zIndex: 1000,
             }}
           />
           <Controller
@@ -124,8 +94,7 @@ function DynamicForm() {
             control={control}
             render={() => <CSVDataTable append={append} />}
           />
-          {/* <CSVDataTable append={(a) => append(a)} /> */}
-          <Input
+          {/* <Input
             type="submit"
             value="submit"
             maxWidth="100"
@@ -135,9 +104,9 @@ function DynamicForm() {
               cursor: 'pointer',
               textAlign: 'center',
               border: 0,
-              zIndex: 1000,
             }}
-          />
+          /> */}
+          <Catalog productInfo={getValues('product')} />
         </HStack>
 
         {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
@@ -254,7 +223,6 @@ function DynamicForm() {
   )
 }
 
-export default DynamicForm
 const styles: Record<string, CSSProperties> = {
   container: {
     margin: '0 auto',

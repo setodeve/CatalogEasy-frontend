@@ -12,12 +12,14 @@ const DropZone = ({
   change: (index: number, image: string | null) => void
 }) => {
   const [droppedImage, setDroppedImage] = useState<string | null>(null)
+  const [droppedImageId, setDroppedImageId] = useState<string | null>(null)
   const [hover, setHover] = useState(false)
   const [, drop] = useDrop(() => ({
     accept: 'image',
-    drop: (item: { src: string } | null) => {
-      if (item) {
+    drop: (item: { id: string; src: string } | null) => {
+      if (item && item.src) {
         setDroppedImage(item.src)
+        setDroppedImageId(item.id)
       }
     },
   }))
@@ -30,8 +32,7 @@ const DropZone = ({
   return (
     <>
       {droppedImage ? (
-        <VStack ref={drop} style={styles.imageContainer}>
-          {/* <CloseIcon onClick={removeSelectedImage} style={styles.imageDelete} /> */}
+        <VStack ref={drop} style={styles.image}>
           <Icon
             onClick={removeSelectedImage}
             style={styles.imageDelete}
@@ -44,7 +45,7 @@ const DropZone = ({
             src={droppedImage}
             alt="Dropped content"
             style={styles.image}
-            onLoad={() => change(index, droppedImage)}
+            onLoad={() => change(index, droppedImage, droppedImageId)}
           />
         </VStack>
       ) : (
