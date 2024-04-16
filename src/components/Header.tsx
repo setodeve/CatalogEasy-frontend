@@ -9,7 +9,6 @@ export default function Header() {
       height: '70px',
       display: 'fixed',
       color: 'white',
-      backgroundColor: '#06559e',
       zIndex: 1,
       position: 'sticky',
     },
@@ -18,6 +17,7 @@ export default function Header() {
   return (
     <Box
       as="header"
+      bg="primary"
       style={styles.container}
       _media={[{ type: 'print', css: { display: 'none' } }]}
     >

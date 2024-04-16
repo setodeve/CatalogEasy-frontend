@@ -32,7 +32,7 @@ export default function Catalog({ productInfo }) {
     <>
       <Button
         onClick={onOpen}
-        colorScheme="sky"
+        colorScheme="primary"
         size="xl"
         style={{
           padding: '10px',
@@ -59,7 +59,7 @@ export default function Catalog({ productInfo }) {
               </Button>
               <Button
                 onClick={() => onSubmit(productInfo)}
-                colorScheme="sky"
+                colorScheme="primary"
                 rightIcon={<FontAwesomeIcon icon={faCheck} />}
               >
                 問題なし

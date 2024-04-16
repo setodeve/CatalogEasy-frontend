@@ -43,7 +43,7 @@ export default function CSVDataTable({
     <>
       <Button
         onClick={onOpen}
-        colorScheme="sky"
+        colorScheme="primary"
         size="xl"
         style={{
           padding: '10px',

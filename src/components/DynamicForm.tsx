@@ -86,7 +86,7 @@ export default function DynamicForm() {
               append(formTemplate)
             }}
             leftIcon={<FontAwesomeIcon icon={faPlus} />}
-            colorScheme="sky"
+            colorScheme="primary"
             style={{
               borderRadius: '100px',
               padding: '10px',
