@@ -20,7 +20,7 @@ const DraggableImage = ({
 
   const styles: Record<string, CSSProperties> = {
     item: {
-      maxWidth: '350px',
+      maxWidth: '250px',
       // border: '2px solid #ffa94d',
       border: isDragging ? '1px dashed gray' : 'none',
       opacity: isDragging ? 0.3 : 1,
@@ -36,8 +36,8 @@ const DraggableImage = ({
 
   return (
     <Image
-      w="350px"
-      h="350px"
+      w="250px"
+      h="250px"
       _media={[{ type: 'print', css: { display: 'none' } }]}
       ref={drag as unknown as LegacyRef<HTMLImageElement>}
       src={src}

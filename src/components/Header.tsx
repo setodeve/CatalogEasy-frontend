@@ -10,6 +10,8 @@ export default function Header() {
       display: 'fixed',
       color: 'white',
       backgroundColor: '#06559e',
+      zIndex: 1,
+      position: 'sticky',
     },
   }
 

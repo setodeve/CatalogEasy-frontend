@@ -66,6 +66,9 @@ export default function DynamicForm() {
         // style={styles.test}
         // _media={[{ type: 'print', css: { width: '100%' } }]}
         className="printCatalog"
+        style={{
+          display: 'block',
+        }}
       >
         <HStack
           _media={[{ type: 'print', css: { display: 'none' } }]}
@@ -73,7 +76,7 @@ export default function DynamicForm() {
             width: '50%',
             justifyContent: 'space-between',
             zIndex: 1,
-            margin: '0 auto',
+            margin: '20px auto 0 auto',
           }}
           position="sticky"
           top="7"
