@@ -13,11 +13,11 @@ export default function DynamicForm() {
   const formTemplate = {
     name: '',
     size: '',
-    tradePrice: 0,
-    retailPrice: 0,
+    trade_price: 0,
+    retail_price: 0,
     remark: '',
     image: null,
-    imageId: null,
+    product_image_id: null,
   }
   const {
     register,
@@ -43,7 +43,7 @@ export default function DynamicForm() {
 
   const handleImageChange = (index: number, src: string, id: string) => {
     setValue(`product.${index}.image`, src)
-    setValue(`product.${index}.imageId`, id)
+    setValue(`product.${index}.product_image_id`, id)
     setImageUpdated(!imageUpdated)
   }
   return (
@@ -169,36 +169,36 @@ export default function DynamicForm() {
                       </HStack>
                       <HStack>
                         <Input
-                          placeholder="tradePrice"
+                          placeholder="trade_price"
                           type="number"
                           {...register(
-                            `product.${absoluteIndex}.tradePrice` as const,
+                            `product.${absoluteIndex}.trade_price` as const,
                             {
                               valueAsNumber: true,
                             },
                           )}
                           className={
-                            errors?.product?.[absoluteIndex]?.tradePrice
+                            errors?.product?.[absoluteIndex]?.trade_price
                               ? 'error'
                               : ''
                           }
-                          defaultValue={f.tradePrice}
+                          defaultValue={f.trade_price}
                         />
                         <Input
-                          placeholder="retailPrice"
+                          placeholder="retail_price"
                           type="number"
                           {...register(
-                            `product.${absoluteIndex}.retailPrice` as const,
+                            `product.${absoluteIndex}.retail_price` as const,
                             {
                               valueAsNumber: true,
                             },
                           )}
                           className={
-                            errors?.product?.[absoluteIndex]?.retailPrice
+                            errors?.product?.[absoluteIndex]?.retail_price
                               ? 'error'
                               : ''
                           }
-                          defaultValue={f.retailPrice}
+                          defaultValue={f.retail_price}
                         />
                       </HStack>
                       <Input

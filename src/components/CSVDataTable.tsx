@@ -26,11 +26,11 @@ export default function CSVDataTable({
       .map((row) => ({
         name: row[0],
         size: row[1],
-        tradePrice: parseFloat(row[2]),
-        retailPrice: parseFloat(row[3]),
+        trade_price: parseFloat(row[2]),
+        retail_price: parseFloat(row[3]),
         remark: null,
         image: null,
-        imageId: null,
+        product_image_id: null,
       }))
       .filter((d) => d.name && d.size)
 
