@@ -2,10 +2,10 @@ export type ProductData = {
   product: {
     name: string
     size: string
-    tradePrice: number
-    retailPrice: number
+    trade_price: number
+    retail_price: number
     remark: string
     image: File | string | null
-    imageId: string | null
+    product_image_id: string | null
   }[]
 }

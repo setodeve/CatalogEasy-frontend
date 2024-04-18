@@ -66,17 +66,17 @@ export default function ConfirmForm({ productInfo }) {
                         <Input
                           variant="unstyled"
                           isDisabled
-                          placeholder="tradePrice"
+                          placeholder="trade_price"
                           type="number"
-                          defaultValue={f.tradePrice}
+                          defaultValue={f.trade_price}
                           style={{ opacity: 1 }}
                         />
                         <Input
                           variant="unstyled"
                           isDisabled
-                          placeholder="retailPrice"
+                          placeholder="retail_price"
                           type="number"
-                          defaultValue={f.retailPrice}
+                          defaultValue={f.retail_price}
                           style={{ opacity: 1 }}
                         />
                       </HStack>

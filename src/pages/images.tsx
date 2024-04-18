@@ -1,15 +1,11 @@
-import { apiRequest } from '@/utils/apiClient'
+import type { ImagesData } from '@/types/images'
+import { fetchImageData } from '@/utils/fetchData'
 import { Heading, HStack, Image, VStack } from '@yamada-ui/react'
 import { useEffect, useState } from 'react'
 
 export default function Images() {
-  interface Data {
-    [key: string]: string[]
-  }
-  const [images, setImages] = useState<Data | null>(null)
-  const fetchImageData = async () => {
-    return apiRequest<ImageData>('GET', `/product_images`)
-  }
+  const [images, setImages] = useState<ImagesData | null>(null)
+
   const handleImageClick = (url: string) => {
     window.open(url, '_blank')
   }
