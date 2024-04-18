@@ -1,5 +1,6 @@
 import ConfirmForm from '@/components/ConfirmForm'
 import type { ProductData } from '@/types/product'
+import { uploadProductData } from '@/utils/fetchData'
 import {
   faCheck,
   faCircleCheck,
@@ -18,6 +19,7 @@ import {
   VStack,
   useDisclosure,
 } from '@yamada-ui/react'
+
 export default function Catalog({ productInfo }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   if (productInfo == null) {
@@ -25,7 +27,7 @@ export default function Catalog({ productInfo }) {
   }
 
   const onSubmit = (data: ProductData) => {
-    console.log(data)
+    uploadProductData({ products: data })
   }
 
   return (

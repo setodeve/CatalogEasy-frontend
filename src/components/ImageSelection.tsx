@@ -54,7 +54,7 @@ const ImageSelection = () => {
               urls.map((url, i) => (
                 <DraggableImage
                   src={url}
-                  id={key + `,${i}`}
+                  id={key}
                   key={key + `${i}`}
                   clickEvent={handleImageClick}
                 />
