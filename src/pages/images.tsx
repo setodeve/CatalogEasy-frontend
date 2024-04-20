@@ -2,22 +2,23 @@ import type { ImagesData } from '@/types/images'
 import { fetchImageData } from '@/utils/fetchData'
 import { Heading, HStack, Image, VStack } from '@yamada-ui/react'
 import { useEffect, useState } from 'react'
-
+import { useAuth } from '@/components/AuthContext'
 export default function Images() {
   const [images, setImages] = useState<ImagesData | null>(null)
-
+  const { isLoggedIn } = useAuth()
   const handleImageClick = (url: string) => {
     window.open(url, '_blank')
   }
   useEffect(() => {
-    fetchImageData()
-      .then((res) => {
-        setImages(res)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
+    if (isLoggedIn)
+      fetchImageData()
+        .then((res) => {
+          setImages(res)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+  }, [isLoggedIn])
 
   return (
     <VStack>

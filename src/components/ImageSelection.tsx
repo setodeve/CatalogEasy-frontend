@@ -4,10 +4,10 @@ import { fetchImageData } from '@/utils/fetchData'
 import { Box, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
-
+import { useAuth } from '@/components/AuthContext'
 const ImageSelection = () => {
   const [images, setImages] = useState<ImageSelectionData | null>(null)
-
+  const { isLoggedIn } = useAuth()
   const handleImageClick = (url: string) => {
     window.open(url, '_blank')
   }
@@ -37,14 +37,15 @@ const ImageSelection = () => {
   }
 
   useEffect(() => {
-    fetchImageData()
-      .then((res) => {
-        setImages(res)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
+    if (isLoggedIn)
+      fetchImageData()
+        .then((res) => {
+          setImages(res)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+  }, [isLoggedIn])
 
   return (
     <VStack style={styles.container} className="hideInPrint">
