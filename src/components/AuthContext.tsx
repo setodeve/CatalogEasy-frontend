@@ -9,7 +9,7 @@ const AuthContext = createContext({
   },
 })
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
 
@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
         }
       } else {
         setIsLoggedIn(false)
-        if (router.pathname !== '/auth/login') {
-          router.push('/auth/login')
-        }
+        // if (router.pathname !== '/auth/login') {
+        //   router.push('/auth/login')
+        // }
       }
     }
 

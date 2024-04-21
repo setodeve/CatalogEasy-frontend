@@ -1,6 +1,6 @@
 import { Dropzone, IMAGE_ACCEPT_TYPE } from '@yamada-ui/dropzone'
 import { HStack, Image, Input, Text, VStack } from '@yamada-ui/react'
-import type { FormEvent } from 'react'
+import type { FormEventHandler } from 'react'
 import React, { useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
 
@@ -41,7 +41,7 @@ export default function ImageUpload() {
   //   )
   // }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
     if (isLoggedIn) {
       const formData = new FormData()
