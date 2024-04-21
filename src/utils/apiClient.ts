@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import axios from 'axios'
-
+import Cookies from 'js-cookie'
 const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
   headers: {
@@ -14,6 +14,21 @@ apiClient.interceptors.request.use(
     // if (token) {
     //   config.headers['Authorization'] = `Bearer ${token}`
     // }
+    const uid = Cookies.get('uid')
+    const client = Cookies.get('client')
+    const accessToken = Cookies.get('access-token')
+
+    if (uid && client && accessToken) {
+      config.headers['uid'] = uid
+      config.headers['client'] = client
+      config.headers['access-token'] = accessToken
+      config.headers['token-type'] = 'Bearer'
+    } else {
+      config.headers['uid'] = ''
+      config.headers['client'] = ''
+      config.headers['access-token'] = ''
+    }
+
     return config
   },
   (error) => {
