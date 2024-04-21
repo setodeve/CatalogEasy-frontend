@@ -2,15 +2,18 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 
-const AuthContext = createContext({
-  isLoggedIn: false,
-  setIsLoggedIn: (bool: boolean) => {
-    bool
-  },
+type AuthContextType = {
+  isLoggedIn: boolean | null
+  setIsLoggedIn: (bool: boolean) => void
+}
+
+const AuthContext = createContext<AuthContextType>({
+  isLoggedIn: null,
+  setIsLoggedIn: () => {},
 })
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -18,26 +21,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const token = Cookies.get('uid')
       if (token) {
         setIsLoggedIn(true)
-        if (
-          router.pathname === '/auth/login' ||
-          router.pathname === '/auth/signup'
-        ) {
-          router.push('/')
-        }
       } else {
         setIsLoggedIn(false)
-        // if (router.pathname !== '/auth/login') {
-        //   router.push('/auth/login')
-        // }
       }
     }
 
     checkAuthStatus()
-  }, [router])
+  }, [])
+
+  useEffect(() => {
+    if (
+      isLoggedIn === false &&
+      router.pathname !== '/auth/login' &&
+      router.pathname !== '/auth/signup'
+    ) {
+      router.push('/auth/login')
+    } else if (
+      isLoggedIn === true &&
+      (router.pathname === '/auth/login' || router.pathname === '/auth/signup')
+    ) {
+      router.push('/')
+    }
+  }, [isLoggedIn, router.pathname, router])
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-      {children}
+      {isLoggedIn === null ? null : children}
     </AuthContext.Provider>
   )
 }

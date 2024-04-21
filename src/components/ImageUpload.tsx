@@ -3,6 +3,7 @@ import { HStack, Image, Input, Text, VStack } from '@yamada-ui/react'
 import type { FormEventHandler } from 'react'
 import React, { useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
+import { uploadImageData } from '@/utils/fetchData'
 
 export default function ImageUpload() {
   const [imgsSrc, setImgsSrc] = useState<string[]>([])
@@ -45,23 +46,11 @@ export default function ImageUpload() {
     e.preventDefault()
     if (isLoggedIn) {
       const formData = new FormData()
-
       selectedFiles.forEach((file) => {
         formData.append('image[]', file)
       })
 
-      fetch(`http://0.0.0.0:8080/api/product_images`, {
-        method: 'POST',
-        body: formData,
-      })
-        .then((res) => {
-          if (res.ok) {
-            console.log('画像がアップロードされました')
-          }
-        })
-        .catch((error) => {
-          console.error('エラー:', error)
-        })
+      uploadImageData(formData)
     }
   }
 

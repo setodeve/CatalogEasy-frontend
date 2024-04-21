@@ -40,6 +40,7 @@ const ImageSelection = () => {
     if (isLoggedIn)
       fetchImageData()
         .then((res) => {
+          console.log(res)
           setImages(res)
         })
         .catch((err) => {
