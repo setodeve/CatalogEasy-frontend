@@ -1,11 +1,14 @@
 import { Dropzone, IMAGE_ACCEPT_TYPE } from '@yamada-ui/dropzone'
 import { HStack, Image, Input, Text, VStack } from '@yamada-ui/react'
-import type { FormEvent } from 'react'
+import type { FormEventHandler } from 'react'
 import React, { useState } from 'react'
+import { useAuth } from '@/components/AuthContext'
+import { uploadImageData } from '@/utils/fetchData'
 
 export default function ImageUpload() {
   const [imgsSrc, setImgsSrc] = useState<string[]>([])
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const { isLoggedIn } = useAuth()
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files)
@@ -39,26 +42,16 @@ export default function ImageUpload() {
   //   )
   // }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
-    const formData = new FormData()
-
-    selectedFiles.forEach((file) => {
-      formData.append('image[]', file)
-    })
-
-    fetch(`http://0.0.0.0:8080/api/product_images`, {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => {
-        if (res.ok) {
-          console.log('画像がアップロードされました')
-        }
+    if (isLoggedIn) {
+      const formData = new FormData()
+      selectedFiles.forEach((file) => {
+        formData.append('image[]', file)
       })
-      .catch((error) => {
-        console.error('エラー:', error)
-      })
+
+      uploadImageData(formData)
+    }
   }
 
   return (

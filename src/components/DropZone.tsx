@@ -9,7 +9,11 @@ const DropZone = ({
   change,
 }: {
   index: number
-  change: (index: number, image: string | null) => void
+  change: (
+    index: number,
+    image: string | null,
+    product_image_id: string | null,
+  ) => void
 }) => {
   const [droppedImage, setDroppedImage] = useState<string | null>(null)
   const [droppedImageId, setDroppedImageId] = useState<string | null>(null)
@@ -26,7 +30,7 @@ const DropZone = ({
 
   const removeSelectedImage = () => {
     setDroppedImage(null)
-    change(index, null)
+    change(index, null, null)
   }
 
   return (
