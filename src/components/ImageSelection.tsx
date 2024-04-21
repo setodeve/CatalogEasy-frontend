@@ -5,6 +5,7 @@ import { Box, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
+
 const ImageSelection = () => {
   const [images, setImages] = useState<ImageSelectionData | null>(null)
   const { isLoggedIn } = useAuth()
@@ -40,7 +41,6 @@ const ImageSelection = () => {
     if (isLoggedIn)
       fetchImageData()
         .then((res) => {
-          console.log(res)
           setImages(res)
         })
         .catch((err) => {
