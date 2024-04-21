@@ -23,6 +23,9 @@ dependencies:
   '@pdfme/ui':
     specifier: ^3.1.5
     version: 3.4.3(@pdfme/common@3.4.3)(@pdfme/schemas@3.4.3)(@types/react@18.2.69)
+  '@types/js-cookie':
+    specifier: ^3.0.6
+    version: 3.0.6
   '@yamada-ui/dropzone':
     specifier: ^1.0.20
     version: 1.0.20(@types/react@18.2.69)(react-dom@18.2.0)(react@18.2.0)
@@ -1070,6 +1073,10 @@ packages:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@types/js-cookie@3.0.6:
+    resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
     dev: false
 
   /@types/json-schema@7.0.15:
