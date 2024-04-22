@@ -1,7 +1,15 @@
-import { splitArrayIntoChunksOfTwo } from '@/utils/productInfo'
+import { splitArrayIntoChunksOfSix } from '@/utils/productInfo'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
-import { Box, HStack, Image, Input, VStack } from '@yamada-ui/react'
+import {
+  Textarea,
+  GridItem,
+  Grid,
+  HStack,
+  Image,
+  Input,
+  VStack,
+} from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 
 export default function ConfirmForm({ productInfo }) {
@@ -19,14 +27,24 @@ export default function ConfirmForm({ productInfo }) {
           }
         }`}
       </style>
-      <VStack className="printCatalog" style={{}}>
-        {splitArrayIntoChunksOfTwo(productInfo).map((chunk, chunkIndex) => {
+      <VStack className="printCatalog">
+        {splitArrayIntoChunksOfSix(productInfo).map((chunk, chunkIndex) => {
           return (
-            <Box key={`chunk-${chunkIndex}`} className="page">
+            <Grid
+              key={`chunk-${chunkIndex}`}
+              className="page"
+              templateColumns="repeat(3, 1fr)"
+              gap="sm"
+            >
               {chunk.map((f: any, fieldIndex: number) => {
-                const absoluteIndex = chunkIndex * 2 + fieldIndex
+                const absoluteIndex = chunkIndex * 6 + fieldIndex
                 return (
-                  <VStack key={absoluteIndex} style={{ marginTop: '20px' }}>
+                  <GridItem
+                    key={absoluteIndex}
+                    // style={{ marginTop: '20px' }}
+                    w="full"
+                    h="4xs"
+                  >
                     <h5>{`No.${absoluteIndex + 1}`}</h5>
                     <VStack className="section">
                       <VStack style={styles.image}>
@@ -40,34 +58,35 @@ export default function ConfirmForm({ productInfo }) {
                           <VStack style={styles.imageContainer}>
                             <Icon
                               icon={faImage}
-                              size="6xl"
+                              size="xl"
                               style={styles.noImage}
                             />
                           </VStack>
                         )}
                       </VStack>
-                      <HStack>
+                      <VStack>
                         <Input
                           variant="unstyled"
                           isDisabled
-                          // placeholder="name"
+                          size="sm"
                           defaultValue={f.name}
                           style={{ opacity: 1 }}
                         />
                         <Input
                           variant="unstyled"
                           isDisabled
-                          // placeholder="size"
+                          size="sm"
                           defaultValue={f.size}
                           style={{ opacity: 1 }}
                         />
-                      </HStack>
+                      </VStack>
                       <HStack>
                         <Input
                           variant="unstyled"
                           isDisabled
                           placeholder="trade_price"
                           type="number"
+                          size="xs"
                           defaultValue={f.trade_price}
                           style={{ opacity: 1 }}
                         />
@@ -76,22 +95,23 @@ export default function ConfirmForm({ productInfo }) {
                           isDisabled
                           placeholder="retail_price"
                           type="number"
+                          size="xs"
                           defaultValue={f.retail_price}
                           style={{ opacity: 1 }}
                         />
                       </HStack>
-                      <Input
+                      <Textarea
                         variant="unstyled"
                         isDisabled
-                        // placeholder="remark"
                         defaultValue={f.remark}
+                        size="sm"
                         style={{ opacity: 1 }}
                       />
                     </VStack>
-                  </VStack>
+                  </GridItem>
                 )
               })}
-            </Box>
+            </Grid>
           )
         })}
       </VStack>
@@ -103,53 +123,27 @@ const styles: Record<string, CSSProperties> = {
   container: {
     margin: '0 auto',
   },
-  delete: {
-    cursor: 'pointer',
-    border: 'none',
-    marginLeft: '650px',
-    gap: '0px',
-    color: 'red',
-  },
   imageContainer: {
-    margin: 'auto',
-    width: '260px',
-    height: '260px',
+    // margin: 'auto',
+    width: '200px',
+    height: '200px',
     border: '1px dotted gray',
     display: 'flex',
     backgroundColor: 'lightgray',
     borderRadius: '15px',
   },
   image: {
-    margin: '0 auto',
-    width: '300px',
-    height: '300px',
+    width: '220px',
+    height: '220px',
     paddingTop: '(3 / 4 * 100%)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    // marginTop: '-270px',
-    // borderRadius: '10px',
-  },
-  imageDelete: {
-    cursor: 'pointer',
-    border: 'none',
-    marginBottom: '230px',
-    marginLeft: '280px',
-    position: 'absolute',
-    color: 'red',
+    objectFit: 'contain',
   },
   noImage: {
     position: 'relative',
     margin: 'auto',
     color: 'gray',
-  },
-  hoveredStyle: {
-    backgroundColor: '#fffff1',
-    color: 'white',
-    width: '100%',
-    height: '250px',
-    border: '1px dotted gray',
-    display: 'flex',
-    borderRadius: '10px',
   },
 }

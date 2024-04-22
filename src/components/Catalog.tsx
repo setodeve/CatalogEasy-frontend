@@ -47,8 +47,11 @@ export default function Catalog({ productInfo }) {
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalCloseButton style={{ opacity: 0 }} isDisabled />
         <ModalOverlay backdropFilter="blur(10px)" />
-        <ModalHeader style={{ margin: 'auto' }}>
-          <VStack>
+        <ModalHeader
+          style={{ margin: 'auto' }}
+          _media={[{ type: 'print', css: { display: 'none' } }]}
+        >
+          <VStack _media={[{ type: 'print', css: { display: 'none' } }]}>
             <Heading as="h4" size="md" isTruncated>
               以下は印刷時のイメージです。問題ないこと確認してください。
             </Heading>
@@ -72,6 +75,7 @@ export default function Catalog({ productInfo }) {
         <ModalBody
           style={{
             backgroundColor: 'inherit',
+
             margin: 'auto',
           }}
         >

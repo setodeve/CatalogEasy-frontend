@@ -2,10 +2,18 @@ import CSVDataTable from '@/components/CSVDataTable'
 import Catalog from '@/components/Catalog'
 import ImageDrop from '@/components/ImageDrop'
 import type { ProductData } from '@/types/product'
-import { splitArrayIntoChunksOfTwo } from '@/utils/productInfo'
+import { splitArrayIntoChunksOfSix } from '@/utils/productInfo'
 import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon, Icon } from '@yamada-ui/fontawesome'
-import { Box, Button, HStack, Input, VStack } from '@yamada-ui/react'
+import {
+  Button,
+  HStack,
+  Input,
+  VStack,
+  SimpleGrid,
+  GridItem,
+  Textarea,
+} from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
@@ -97,27 +105,26 @@ export default function DynamicForm() {
             control={control}
             render={() => <CSVDataTable append={append} />}
           />
-          {/* <Input
-            type="submit"
-            value="submit"
-            maxWidth="100"
-            style={{
-              backgroundColor: '#7bc0f9',
-              color: 'white',
-              cursor: 'pointer',
-              textAlign: 'center',
-              border: 0,
-            }}
-          /> */}
           <Catalog productInfo={getValues('product')} />
         </HStack>
-        {splitArrayIntoChunksOfTwo(fields).map((chunk, chunkIndex) => {
+        {splitArrayIntoChunksOfSix(fields).map((chunk, chunkIndex) => {
           return (
-            <Box key={`chunk-${chunkIndex}`} className="page">
+            <SimpleGrid
+              key={`chunk-${chunkIndex}`}
+              className="page"
+              // w="full"
+              columns={{ base: 3, md: 1 }}
+              gap="md"
+            >
               {chunk.map((f, fieldIndex) => {
-                const absoluteIndex = chunkIndex * 2 + fieldIndex
+                const absoluteIndex = chunkIndex * 6 + fieldIndex
                 return (
-                  <VStack key={f.id} style={{ marginTop: '20px' }}>
+                  <GridItem
+                    key={f.id}
+                    // style={{ marginTop: '10px' }}
+                    w="full"
+                    h="4xs"
+                  >
                     <h5>{`No.${absoluteIndex + 1}`}</h5>
                     <Icon
                       type="button"
@@ -126,7 +133,7 @@ export default function DynamicForm() {
                       }}
                       style={styles.delete}
                       icon={faXmark}
-                      size="2xl"
+                      size="xl"
                       _media={[{ type: 'print', css: { display: 'none' } }]}
                     />
                     <VStack className="section">
@@ -141,9 +148,9 @@ export default function DynamicForm() {
                         )}
                       />
 
-                      <HStack>
+                      <VStack>
                         <Input
-                          placeholder="name"
+                          placeholder="製品名"
                           {...register(
                             `product.${absoluteIndex}.name` as const,
                           )}
@@ -152,10 +159,11 @@ export default function DynamicForm() {
                               ? 'error'
                               : ''
                           }
+                          size="sm"
                           defaultValue={f.name}
                         />
                         <Input
-                          placeholder="size"
+                          placeholder="サイズ"
                           {...register(
                             `product.${absoluteIndex}.size` as const,
                           )}
@@ -164,9 +172,10 @@ export default function DynamicForm() {
                               ? 'error'
                               : ''
                           }
+                          size="sm"
                           defaultValue={f.size}
                         />
-                      </HStack>
+                      </VStack>
                       <HStack>
                         <Input
                           placeholder="trade_price"
@@ -182,6 +191,7 @@ export default function DynamicForm() {
                               ? 'error'
                               : ''
                           }
+                          size="xs"
                           defaultValue={f.trade_price}
                         />
                         <Input
@@ -198,11 +208,12 @@ export default function DynamicForm() {
                               ? 'error'
                               : ''
                           }
+                          size="xs"
                           defaultValue={f.retail_price}
                         />
                       </HStack>
-                      <Input
-                        placeholder="remark"
+                      <Textarea
+                        placeholder="備考"
                         {...register(
                           `product.${absoluteIndex}.remark` as const,
                         )}
@@ -211,13 +222,14 @@ export default function DynamicForm() {
                             ? 'error'
                             : ''
                         }
+                        size="sm"
                         defaultValue={f.remark}
                       />
                     </VStack>
-                  </VStack>
+                  </GridItem>
                 )
               })}
-            </Box>
+            </SimpleGrid>
           )
         })}
       </VStack>
@@ -232,7 +244,7 @@ const styles: Record<string, CSSProperties> = {
   delete: {
     cursor: 'pointer',
     border: 'none',
-    marginLeft: '650px',
+    marginLeft: '230px',
     gap: '0px',
     color: 'red',
   },
