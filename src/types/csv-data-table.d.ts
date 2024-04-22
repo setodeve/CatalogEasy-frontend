@@ -1,4 +1,4 @@
-export interface CSVData {
+export type CSVData = {
   name: string
   size: string
   trade_price: number

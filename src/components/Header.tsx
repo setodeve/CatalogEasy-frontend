@@ -7,6 +7,8 @@ import {
   faRightToBracket,
   faRightFromBracket,
   faUserPlus,
+  faList,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import { useAuth } from '@/components/AuthContext'
@@ -94,9 +96,24 @@ export default function Header() {
             size="md"
             onClick={() => navigate('/')}
             leftIcon={<FontAwesomeIcon icon={faHouse} />}
-          >
-            ホーム
-          </Button>
+          />
+          <Button
+            variant="outline"
+            colorScheme="primary"
+            bg="white"
+            size="md"
+            onClick={() => navigate('/upload')}
+            leftIcon={<FontAwesomeIcon icon={faPlus} />}
+          />
+          <Button
+            variant="outline"
+            colorScheme="primary"
+            bg="white"
+            size="md"
+            onClick={() => navigate('/catalogs')}
+            leftIcon={<FontAwesomeIcon icon={faList} />}
+          />
+
           {isLoggedIn ? (
             <Button
               variant="outline"
