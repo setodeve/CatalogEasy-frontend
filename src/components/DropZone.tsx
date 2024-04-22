@@ -41,7 +41,7 @@ const DropZone = ({
             onClick={removeSelectedImage}
             style={styles.imageDelete}
             icon={faXmark}
-            size="2xl"
+            size="xl"
             _media={[{ type: 'print', css: { display: 'none' } }]}
           />
 
@@ -71,28 +71,26 @@ export default DropZone
 
 const styles: Record<string, CSSProperties> = {
   imageContainer: {
-    width: '100%',
-    height: '260px',
+    width: '90%',
+    height: '90%',
     border: '1px dotted gray',
     display: 'flex',
     backgroundColor: 'lightgray',
     borderRadius: '15px',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: '95%',
+    height: '95%',
     paddingTop: '(3 / 4 * 100%)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    // marginTop: '-270px',
-    // borderRadius: '10px',
+    objectFit: 'contain',
   },
   imageDelete: {
     cursor: 'pointer',
     border: 'none',
-    marginBottom: '230px',
-    marginLeft: '280px',
+    marginLeft: '200px',
     position: 'absolute',
     color: 'red',
   },

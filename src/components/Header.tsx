@@ -64,6 +64,7 @@ export default function Header() {
         zIndex: 1,
         position: 'sticky',
       }}
+      _media={[{ type: 'print', css: { display: 'none' } }]}
     >
       <HStack justifyContent="space-between" mt="10px">
         <HStack>
@@ -78,41 +79,45 @@ export default function Header() {
           </Heading>
         </HStack>
         <HStack>
-          <Button
-            variant="outline"
-            colorScheme="gray"
-            bg="gray"
-            size="md"
-            color="white"
-            border="unset"
-            leftIcon={<FontAwesomeIcon color="white" icon={faCircleQuestion} />}
-          >
-            使い方を見る
-          </Button>
-          <Button
-            variant="outline"
-            colorScheme="primary"
-            bg="white"
-            size="md"
-            onClick={() => navigate('/')}
-            leftIcon={<FontAwesomeIcon icon={faHouse} />}
-          />
-          <Button
-            variant="outline"
-            colorScheme="primary"
-            bg="white"
-            size="md"
-            onClick={() => navigate('/upload')}
-            leftIcon={<FontAwesomeIcon icon={faPlus} />}
-          />
-          <Button
-            variant="outline"
-            colorScheme="primary"
-            bg="white"
-            size="md"
-            onClick={() => navigate('/catalogs')}
-            leftIcon={<FontAwesomeIcon icon={faList} />}
-          />
+          <HStack>
+            <Button
+              variant="outline"
+              colorScheme="gray"
+              bg="gray"
+              size="md"
+              color="white"
+              border="unset"
+              leftIcon={
+                <FontAwesomeIcon color="white" icon={faCircleQuestion} />
+              }
+            >
+              使い方を見る
+            </Button>
+            <Button
+              variant="outline"
+              colorScheme="primary"
+              bg="white"
+              size="md"
+              onClick={() => navigate('/')}
+              leftIcon={<FontAwesomeIcon icon={faHouse} />}
+            />
+            <Button
+              variant="outline"
+              colorScheme="primary"
+              bg="white"
+              size="md"
+              onClick={() => navigate('/upload')}
+              leftIcon={<FontAwesomeIcon icon={faPlus} />}
+            />
+            <Button
+              variant="outline"
+              colorScheme="primary"
+              bg="white"
+              size="md"
+              onClick={() => navigate('/catalogs')}
+              leftIcon={<FontAwesomeIcon icon={faList} />}
+            />
+          </HStack>
 
           {isLoggedIn ? (
             <Button
