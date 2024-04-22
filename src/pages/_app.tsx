@@ -14,14 +14,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>CatalogEasy</title>
         <link
           rel="icon"
-          href="catalogcat_white.png"
+          href="../catalogcat_white.png"
           media="(prefers-color-scheme: dark)"
           sizes="any"
           type="image/x-icon"
         />
         <link
           rel="icon"
-          href="catalogcat_black.png"
+          href="../catalogcat_black.png"
           media="(prefers-color-scheme: light)"
           sizes="any"
           type="image/x-icon"
