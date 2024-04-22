@@ -1,8 +1,16 @@
 import { apiRequest } from '@/utils/apiClient'
-import { type } from 'os'
+import type { ImageSelectionData } from '@/types/image-selection'
 
 export const fetchImageData = async () => {
-  return apiRequest<ImageData>('GET', `/product_images`)
+  return apiRequest<ImageSelectionData>('GET', `/product_images`)
+}
+
+export const fetchCatalogsData = async () => {
+  return apiRequest<string[] | null>('GET', `/catalogs`)
+}
+
+export const fetchCatalogData = async (id) => {
+  return apiRequest<string[] | null>('GET', `/catalogs/${id}`)
 }
 
 export const uploadImageData = async (data) => {
