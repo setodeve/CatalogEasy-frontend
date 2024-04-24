@@ -1,6 +1,6 @@
 import type { ImagesData } from '@/types/images'
 import { fetchImageData } from '@/utils/fetchData'
-import { Heading, HStack, Image, VStack } from '@yamada-ui/react'
+import { Heading, HStack, Image, useNotice, VStack } from '@yamada-ui/react'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
 export default function Images() {
@@ -9,6 +9,7 @@ export default function Images() {
   const handleImageClick = (url: string) => {
     window.open(url, '_blank')
   }
+  const notice = useNotice({ limit: 1 })
   useEffect(() => {
     if (isLoggedIn)
       fetchImageData()
@@ -17,6 +18,11 @@ export default function Images() {
         })
         .catch((err) => {
           console.error(err)
+          notice({
+            description: '画像データ取得に失敗しました',
+            placement: 'bottom-right',
+            status: 'error',
+          })
         })
   }, [isLoggedIn])
 

@@ -1,5 +1,5 @@
 import { Dropzone, IMAGE_ACCEPT_TYPE } from '@yamada-ui/dropzone'
-import { HStack, Image, Input, Text, VStack } from '@yamada-ui/react'
+import { HStack, Image, Input, Text, useNotice, VStack } from '@yamada-ui/react'
 import type { FormEventHandler } from 'react'
 import React, { useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
@@ -41,7 +41,7 @@ export default function ImageUpload() {
   //     </>
   //   )
   // }
-
+  const notice = useNotice({ limit: 1 })
   const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
     if (isLoggedIn) {
@@ -51,6 +51,20 @@ export default function ImageUpload() {
       })
 
       uploadImageData(formData)
+        .then(() => {
+          notice({
+            description: '画像アップデートに成功しました',
+            placement: 'bottom-right',
+          })
+        })
+        .catch((err) => {
+          console.error(err)
+          notice({
+            description: '画像アップデートに失敗しました',
+            placement: 'bottom-right',
+            status: 'error',
+          })
+        })
     }
   }
 

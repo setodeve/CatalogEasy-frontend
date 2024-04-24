@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { FormEventHandler } from 'react'
 import { useState } from 'react'
-import { VStack, Input, Button } from '@yamada-ui/react'
+import { VStack, Input, Button, useNotice } from '@yamada-ui/react'
 import { useAuth } from '@/components/AuthContext'
 import { login } from '@/utils/auth'
 import { useRouter } from 'next/router'
@@ -11,6 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const { setIsLoggedIn } = useAuth()
   const router = useRouter()
+  const notice = useNotice({ limit: 1 })
   const handleLogin: FormEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault()
     try {
@@ -21,15 +22,6 @@ export default function Login() {
           password,
         },
       )
-      // const cookieSetting = { expires: 7, secure: true, sameSite: 'strict' }
-      // Cookies.set('uid', response.headers['uid'], cookieSetting)
-      // Cookies.set('client', response.headers['client'], cookieSetting)
-      // Cookies.set(
-      //   'access-token',
-      //   response.headers['access-token'],
-      //   cookieSetting,
-      // )
-      // setIsLoggedIn(true)
       login(
         response.headers['uid'],
         response.headers['client'],
@@ -37,8 +29,16 @@ export default function Login() {
       )
       setIsLoggedIn(true)
       router.push('/')
-      console.log('Login success:', response)
+      notice({
+        description: 'ログインに成功しました',
+        placement: 'bottom-right',
+      })
     } catch (error) {
+      notice({
+        description: 'ログインに失敗しました',
+        placement: 'bottom-right',
+        status: 'error',
+      })
       console.error('Login error:', error)
     }
   }

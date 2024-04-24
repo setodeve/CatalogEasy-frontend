@@ -1,4 +1,11 @@
-import { Box, Heading, Link, SimpleGrid, GridItem } from '@yamada-ui/react'
+import {
+  Box,
+  Heading,
+  Link,
+  SimpleGrid,
+  GridItem,
+  useNotice,
+} from '@yamada-ui/react'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
 import { fetchCatalogsData } from '@/utils/fetchData'
@@ -11,6 +18,7 @@ export default function App() {
   const { isLoggedIn } = useAuth()
   const getFormattedDate = (date: string): string =>
     new Date(Date.parse(date)).toLocaleString()
+  const notice = useNotice({ limit: 1 })
 
   useEffect(() => {
     if (isLoggedIn)
@@ -20,6 +28,11 @@ export default function App() {
         })
         .catch((err) => {
           console.error(err)
+          notice({
+            description: 'データ取得に失敗しました',
+            placement: 'bottom-right',
+            status: 'error',
+          })
         })
   }, [isLoggedIn])
 
