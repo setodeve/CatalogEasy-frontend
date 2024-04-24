@@ -1,7 +1,7 @@
 import DraggableImage from '@/components/DraggableImage'
 import type { ImageSelectionData } from '@/types/image-selection'
 import { fetchImageData } from '@/utils/fetchData'
-import { Box, VStack } from '@yamada-ui/react'
+import { Box, useNotice, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/AuthContext'
@@ -36,7 +36,7 @@ const ImageSelection = () => {
       height: '100vh',
     },
   }
-
+  const notice = useNotice({ limit: 1 })
   useEffect(() => {
     if (isLoggedIn)
       fetchImageData()
@@ -45,6 +45,11 @@ const ImageSelection = () => {
         })
         .catch((err) => {
           console.error(err)
+          notice({
+            description: '画像データ取得に失敗しました',
+            placement: 'bottom-right',
+            status: 'error',
+          })
         })
   }, [isLoggedIn])
 

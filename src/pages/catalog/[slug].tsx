@@ -6,21 +6,11 @@ import ConfirmForm from '@/components/ConfirmForm'
 import { Button, VStack, Flex, Loading } from '@yamada-ui/react'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
-// import jsPDF from 'jspdf'
-// import html2canvas from 'html2canvas'
 
 export default function Page() {
   const router = useRouter()
-  const [catalog, setCatalog] = useState<any>(null)
+  const [catalog, setCatalog] = useState(null)
   const { isLoggedIn } = useAuth()
-  // const exportPDF = () => {
-  //   html2canvas(document.body).then((canvas) => {
-  //     const imgData = canvas.toDataURL('image/png')
-  //     const pdf = new jsPDF()
-  //     pdf.addImage(imgData, 'PNG', 0, 0)
-  //     pdf.save('download.pdf')
-  //   })
-  // }
 
   useEffect(() => {
     if (isLoggedIn && router.query.slug)
@@ -54,16 +44,6 @@ export default function Page() {
         >
           印刷 または PDF出力する
         </Button>
-        {/* <Button
-          leftIcon={<FontAwesomeIcon icon={faFilePdf} />}
-          colorScheme="primary"
-          style={{
-            padding: '10px',
-          }}
-          onClick={() => exportPDF()}
-        >
-          PDF
-        </Button> */}
       </VStack>
       <Flex justify="center" align="center" direction="column">
         {catalog ? (

@@ -1,4 +1,11 @@
-import { Box, Button, HStack, Heading, Image } from '@yamada-ui/react'
+import {
+  Box,
+  Button,
+  HStack,
+  Heading,
+  Image,
+  useNotice,
+} from '@yamada-ui/react'
 import { useRouter } from 'next/router'
 import { useRef, useCallback } from 'react'
 import {
@@ -20,7 +27,7 @@ export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth()
   const submitProcessing = useRef(false)
   const router = useRouter()
-
+  const notice = useNotice({ limit: 1 })
   const navigate = useCallback(
     (url: string) => {
       if (submitProcessing.current) return
@@ -44,9 +51,17 @@ export default function Header() {
       logout()
       setIsLoggedIn(false)
       navigate('/auth/login')
-      console.log('Logout success')
+      notice({
+        description: 'ログアウトしました',
+        placement: 'bottom-right',
+      })
     } catch (error) {
       console.error('Logout error:', error)
+      notice({
+        description: 'ログアウトに失敗しました',
+        placement: 'bottom-right',
+        status: 'error',
+      })
     }
     submitProcessing.current = false
   }

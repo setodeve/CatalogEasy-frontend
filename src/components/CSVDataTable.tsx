@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
+  useNotice,
 } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
@@ -20,6 +21,7 @@ export default function CSVDataTable({
 }) {
   const [_, setUploadedList] = useState<CSVData[]>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const notice = useNotice({ limit: 1 })
 
   const handleUploadCsv = (data: string[][]) => {
     const formattedData = data
@@ -37,6 +39,10 @@ export default function CSVDataTable({
     setUploadedList(formattedData)
     append(formattedData)
     onClose()
+    notice({
+      description: 'CSVデータの読み込みに成功しました',
+      placement: 'bottom-right',
+    })
   }
 
   return (
@@ -50,7 +56,7 @@ export default function CSVDataTable({
         }}
         leftIcon={<FontAwesomeIcon icon={faFileImport} />}
       >
-        Import CSV
+        CSVからインポート
       </Button>
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={onClose} size="xl">

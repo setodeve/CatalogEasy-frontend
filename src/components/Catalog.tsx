@@ -18,16 +18,46 @@ import {
   ModalOverlay,
   VStack,
   useDisclosure,
+  useNotice,
 } from '@yamada-ui/react'
+import { useAuth } from '@/components/AuthContext'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export default function Catalog({ productInfo }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  if (productInfo == null) {
-    return null
-  }
+  const { isLoggedIn } = useAuth()
+  const router = useRouter()
+  const notice = useNotice({ limit: 1 })
+
+  useEffect(() => {
+    if (isLoggedIn == false) {
+      router.push('/auth/login')
+    }
+  }, [isLoggedIn, router])
 
   const onSubmit = (data: ProductData) => {
     uploadProductData({ products: data })
+      .then((res) => {
+        notice({
+          description: 'カタログ作成しました',
+          placement: 'bottom-right',
+        })
+        onClose()
+        router.push('/catalogs')
+      })
+      .catch((err) => {
+        console.error(err)
+        notice({
+          description: 'カタログ作成に失敗しました',
+          placement: 'bottom-right',
+          status: 'error',
+        })
+      })
+  }
+
+  if (productInfo == null) {
+    return null
   }
 
   return (
@@ -75,7 +105,6 @@ export default function Catalog({ productInfo }) {
         <ModalBody
           style={{
             backgroundColor: 'inherit',
-
             margin: 'auto',
           }}
         >
