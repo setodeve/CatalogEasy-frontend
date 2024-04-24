@@ -43,9 +43,8 @@ export default function Page() {
         <Button
           leftIcon={<FontAwesomeIcon icon={faPrint} />}
           colorScheme="primary"
-          style={{
-            padding: '10px',
-          }}
+          margin="10px auto"
+          padding="10px"
           onClick={() => window.print()}
         >
           印刷 または PDF出力する

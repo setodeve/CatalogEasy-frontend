@@ -110,30 +110,36 @@ export default function Header() {
             >
               使い方を見る
             </Button>
-            <Button
-              variant="outline"
-              colorScheme="primary"
-              bg="white"
-              size="md"
-              onClick={() => navigate('/')}
-              leftIcon={<FontAwesomeIcon icon={faHouse} />}
-            />
-            <Button
-              variant="outline"
-              colorScheme="primary"
-              bg="white"
-              size="md"
-              onClick={() => navigate('/upload')}
-              leftIcon={<FontAwesomeIcon icon={faPlus} />}
-            />
-            <Button
-              variant="outline"
-              colorScheme="primary"
-              bg="white"
-              size="md"
-              onClick={() => navigate('/catalogs')}
-              leftIcon={<FontAwesomeIcon icon={faList} />}
-            />
+            {isLoggedIn ? (
+              <>
+                <Button
+                  variant="outline"
+                  colorScheme="primary"
+                  bg="white"
+                  size="md"
+                  onClick={() => navigate('/')}
+                  leftIcon={<FontAwesomeIcon icon={faHouse} />}
+                />
+                <Button
+                  variant="outline"
+                  colorScheme="primary"
+                  bg="white"
+                  size="md"
+                  onClick={() => navigate('/upload')}
+                  leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                />
+                <Button
+                  variant="outline"
+                  colorScheme="primary"
+                  bg="white"
+                  size="md"
+                  onClick={() => navigate('/catalogs')}
+                  leftIcon={<FontAwesomeIcon icon={faList} />}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </HStack>
 
           {isLoggedIn ? (
