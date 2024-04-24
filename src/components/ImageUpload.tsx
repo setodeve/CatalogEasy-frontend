@@ -1,14 +1,16 @@
 import { Dropzone, IMAGE_ACCEPT_TYPE } from '@yamada-ui/dropzone'
 import { HStack, Image, Input, Text, useNotice, VStack } from '@yamada-ui/react'
 import type { FormEventHandler } from 'react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAuth } from '@/components/AuthContext'
 import { uploadImageData } from '@/utils/fetchData'
+import { useRouter } from 'next/router'
 
 export default function ImageUpload() {
   const [imgsSrc, setImgsSrc] = useState<string[]>([])
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const { isLoggedIn } = useAuth()
+  const router = useRouter()
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files)
@@ -30,18 +32,14 @@ export default function ImageUpload() {
     }
   }
 
-  // const showImageInModal = (imageUrls: string[]) => {
-  //   return (
-  //     <>
-  //       {imageUrls.map((url, i) => (
-  //         <Modal isOpen={isOpen} onClose={onClose} key={i}>
-  //           <Image src={url} alt="image" />
-  //         </Modal>
-  //       ))}
-  //     </>
-  //   )
-  // }
   const notice = useNotice({ limit: 1 })
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/auth/login')
+    }
+  }, [isLoggedIn])
+
   const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
     if (isLoggedIn) {
@@ -56,6 +54,7 @@ export default function ImageUpload() {
             description: '画像アップデートに成功しました',
             placement: 'bottom-right',
           })
+          router.push('/')
         })
         .catch((err) => {
           console.error(err)

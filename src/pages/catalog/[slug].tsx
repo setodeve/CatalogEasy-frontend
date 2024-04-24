@@ -13,6 +13,12 @@ export default function Page() {
   const { isLoggedIn } = useAuth()
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/auth/login')
+    }
+  }, [isLoggedIn, router])
+
+  useEffect(() => {
     if (isLoggedIn && router.query.slug)
       fetchCatalogData(router.query.slug)
         .then((res) => {
