@@ -7,7 +7,7 @@ import {
   useNotice,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
-import { useRef, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import {
   faHouse,
   faCircleQuestion,
@@ -20,9 +20,7 @@ import {
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import { useAuth } from '@/components/AuthContext'
 import { logout } from '@/utils/auth'
-import axios from 'axios'
-import Cookies from 'js-cookie'
-
+import { signoutUserData } from '@/utils/fetchData'
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth()
   const submitProcessing = useRef(false)
@@ -38,31 +36,34 @@ export default function Header() {
     [router],
   )
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/auth/login')
+    }
+  }, [isLoggedIn])
+
   const handleLogout = async () => {
     if (submitProcessing.current) return
     submitProcessing.current = true
-    try {
-      const data = {
-        uid: Cookies.get('uid'),
-        client: Cookies.get('client'),
-        'access-token': Cookies.get('access-token'),
-      }
-      await axios.delete('http://localhost:8080/api/auth/sign_out', { data })
-      logout()
-      setIsLoggedIn(false)
-      navigate('/auth/login')
-      notice({
-        description: 'ログアウトしました',
-        placement: 'bottom-right',
+
+    signoutUserData()
+      .then(() => {
+        logout()
+        setIsLoggedIn(false)
+        navigate('/auth/login')
+        notice({
+          description: 'ログアウトしました',
+          placement: 'bottom-right',
+        })
       })
-    } catch (error) {
-      console.error('Logout error:', error)
-      notice({
-        description: 'ログアウトに失敗しました',
-        placement: 'bottom-right',
-        status: 'error',
+      .catch((err) => {
+        console.error('Logout error:', err)
+        notice({
+          description: 'ログアウトに失敗しました',
+          placement: 'bottom-right',
+          status: 'error',
+        })
       })
-    }
     submitProcessing.current = false
   }
 
