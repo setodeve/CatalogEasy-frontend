@@ -17,6 +17,18 @@ export const fetchSessionData = async () => {
   return apiRequest<UserData>('GET', `/auth/sessions`)
 }
 
+export const signinUserData = async (data) => {
+  return apiRequest('POST', `/auth/sign_in`, data)
+}
+
+export const signupUserData = async (data) => {
+  return apiRequest('POST', `/auth`, data)
+}
+
+export const signoutUserData = async () => {
+  return apiRequest('DELETE', `/auth/sign_out`)
+}
+
 export const uploadImageData = async (data) => {
   return apiRequest<ImageData>('POST', `/product_images`, data)
 }

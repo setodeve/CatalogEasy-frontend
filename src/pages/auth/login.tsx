@@ -5,6 +5,7 @@ import { VStack, Input, Button, useNotice } from '@yamada-ui/react'
 import { useAuth } from '@/components/AuthContext'
 import { login } from '@/utils/auth'
 import { useRouter } from 'next/router'
+import { signinUserData } from '@/utils/fetchData'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -41,6 +42,28 @@ export default function Login() {
       })
       console.error('Login error:', error)
     }
+    // try {
+    //   const res = await signinUserData({ email, password })
+    //   console.log(res)
+    //   login(
+    //     res.headers['uid'],
+    //     res.headers['client'],
+    //     res.headers['access-token'],
+    //   )
+    //   setIsLoggedIn(true)
+    //   router.push('/')
+    //   notice({
+    //     description: 'ログインに成功しました',
+    //     placement: 'bottom-right',
+    //   })
+    // } catch (err) {
+    //   notice({
+    //     description: 'ログインに失敗しました',
+    //     placement: 'bottom-right',
+    //     status: 'error',
+    //   })
+    //   console.error('Login error:', err)
+    // }
   }
 
   return (
