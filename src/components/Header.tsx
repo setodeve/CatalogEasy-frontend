@@ -87,6 +87,7 @@ export default function Header() {
               size="md"
               color="white"
               border="unset"
+              onClick={() => navigate('/usage#usage')}
               leftIcon={
                 <FontAwesomeIcon color="white" icon={faCircleQuestion} />
               }
