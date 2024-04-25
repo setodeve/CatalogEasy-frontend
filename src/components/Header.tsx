@@ -39,6 +39,11 @@ export default function Header() {
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/auth/login')
+      notice({
+        description: 'ログインしてください',
+        placement: 'bottom-right',
+        status: 'warning',
+      })
     }
   }, [isLoggedIn])
 
@@ -163,7 +168,7 @@ export default function Header() {
               mr="30px"
               onClick={() =>
                 navigate(
-                  router.pathname === '/auth/signup'
+                  router.pathname == '/auth/signup'
                     ? '/auth/login'
                     : '/auth/signup',
                 )
