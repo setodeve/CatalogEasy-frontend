@@ -1,6 +1,7 @@
-import { Image } from '@yamada-ui/react'
+import { Image, Loading } from '@yamada-ui/react'
 import type { CSSProperties, LegacyRef } from 'react'
 import { useDrag } from 'react-dnd'
+
 const DraggableImage = ({
   src,
   id,
@@ -49,6 +50,7 @@ const DraggableImage = ({
         }
       }}
       style={styles.item}
+      fallback={<Loading size="3xl" margin="auto" />}
     />
   )
 }
