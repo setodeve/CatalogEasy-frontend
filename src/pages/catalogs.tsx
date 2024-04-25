@@ -12,7 +12,6 @@ import { fetchCatalogsData } from '@/utils/fetchData'
 import type { CatalogData } from '@/types/catalogs'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
-import { useRouter } from 'next/router'
 
 export default function App() {
   const [catalogs, setCatalogs] = useState<CatalogData | null>(null)
@@ -20,7 +19,6 @@ export default function App() {
   const getFormattedDate = (date: string): string =>
     new Date(Date.parse(date)).toLocaleString()
   const notice = useNotice({ limit: 1 })
-  const router = useRouter()
   useEffect(() => {
     if (isLoggedIn) {
       fetchCatalogsData()
@@ -35,8 +33,6 @@ export default function App() {
             status: 'error',
           })
         })
-    } else {
-      router.push('/auth/login')
     }
   }, [isLoggedIn])
 

@@ -29,7 +29,7 @@ export default function Catalog({ productInfo }) {
 
   const onSubmit = (data: ProductData) => {
     uploadProductData({ products: data })
-      .then((res) => {
+      .then(() => {
         notice({
           description: 'カタログ作成しました',
           placement: 'bottom-right',

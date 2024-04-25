@@ -1,5 +1,5 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
 const apiClient: AxiosInstance = axios.create({
@@ -29,7 +29,7 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-export const apiRequest = async <T = unknown, R = AxiosResponse<T>>(
+export const apiRequest = async <T = unknown, R = AxiosResponse>(
   method: string,
   url: string,
   requestData?: T,
@@ -43,9 +43,13 @@ export const apiRequest = async <T = unknown, R = AxiosResponse<T>>(
       ...config,
     })
     return response.data
-  } catch (error) {
-    console.error('Error:', error)
-    throw new Error(`Failed to fetch: ${error.message || error.toString()}`)
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      throw new Error(`Failed to fetch: ${error.message || error.toString()}`)
+    } else {
+      console.error('Error:', error)
+      throw new Error('An unexpected error occurred')
+    }
   }
 }
 
