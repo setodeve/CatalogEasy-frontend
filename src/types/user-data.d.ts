@@ -1,4 +1,5 @@
 export type UserData = {
+  is_login: boolean
   data: {
     allow_password_change: boolean
     created_at: string
@@ -11,5 +12,9 @@ export type UserData = {
     uid: string
     updated_at: string
   }
+}
+
+export type UserErrorData = {
+  message: string
   is_login: boolean
 }
