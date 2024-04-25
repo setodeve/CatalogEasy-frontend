@@ -1,11 +1,5 @@
 import Cookies from 'js-cookie'
 
-const COOKIESETTING = {
-  expires: 7,
-  secure: true,
-  sameSite: 'strict',
-}
-
 export const logout = () => {
   Cookies.remove('uid')
   Cookies.remove('client')
@@ -13,7 +7,19 @@ export const logout = () => {
 }
 
 export const login = (uid: string, client: string, accessToken: string) => {
-  Cookies.set('uid', uid, COOKIESETTING)
-  Cookies.set('client', client, COOKIESETTING)
-  Cookies.set('access-token', accessToken, COOKIESETTING)
+  Cookies.set('uid', uid, {
+    expires: 7,
+    secure: true,
+    sameSite: 'strict',
+  })
+  Cookies.set('client', client, {
+    expires: 7,
+    secure: true,
+    sameSite: 'strict',
+  })
+  Cookies.set('access-token', accessToken, {
+    expires: 7,
+    secure: true,
+    sameSite: 'strict',
+  })
 }

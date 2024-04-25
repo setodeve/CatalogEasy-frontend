@@ -1,5 +1,4 @@
 import { apiRequest } from '@/utils/apiClient'
-import type { UserData } from '@/types/user-data'
 import type { ProductData } from '@/types/product'
 import type { SignInData, SignUpData } from '@/types/auth'
 

@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { fetchSessionData } from '@/utils/fetchData'
 import Cookies from 'js-cookie'
-import type { AxiosResponse } from 'axios'
 
 type AuthContextType = {
   isLoggedIn: boolean | null
@@ -20,15 +19,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
 
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      if (isRouter === router.pathname) {
-        return
-      }
-      setIsRouter(router.pathname)
+    if (isRouter === router.pathname) {
+      return
+    }
+    setIsRouter(router.pathname)
 
+    const checkAuthStatus = async () => {
       const uid = Cookies.get('uid')
 
-      const sessionData: AxiosResponse = await fetchSessionData()
+      const sessionData = await fetchSessionData()
       const shouldLogIn = sessionData.is_login && uid !== undefined
 
       if (isLoggedIn !== shouldLogIn) {
