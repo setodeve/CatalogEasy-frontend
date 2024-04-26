@@ -7,7 +7,7 @@ import {
   useNotice,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useCallback } from 'react'
 import {
   faHouse,
   faCircleQuestion,
@@ -35,17 +35,6 @@ export default function Header() {
     },
     [router],
   )
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.push('/auth/login')
-      notice({
-        description: 'ログインしてください',
-        placement: 'bottom-right',
-        status: 'warning',
-      })
-    }
-  }, [isLoggedIn])
 
   const handleLogout = async () => {
     if (submitProcessing.current) return
