@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { fetchSessionData } from '@/utils/fetchData'
 import Cookies from 'js-cookie'
+import { Loading } from '@yamada-ui/react'
 
 type AuthContextType = {
   isLoggedIn: boolean | null
@@ -32,12 +33,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (isLoggedIn !== shouldLogIn) {
         setIsLoggedIn(shouldLogIn)
-        if (!shouldLogIn && router.pathname !== '/lp') {
+        if (
+          !shouldLogIn &&
+          ['/lp', '/toc', '/pp'].every((item) => item !== router.pathname)
+        ) {
           router.push('/auth/login')
         } else if (
           shouldLogIn &&
-          (router.pathname === '/auth/login' ||
-            router.pathname === '/auth/signup')
+          ['/auth/login', '/auth/signup'].some(
+            (item) => item === router.pathname,
+          )
         ) {
           router.push('/')
         }
@@ -49,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-      {isLoggedIn !== null ? children : null}
+      {isLoggedIn !== null ? children : <Loading />}
     </AuthContext.Provider>
   )
 }

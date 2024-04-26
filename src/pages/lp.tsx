@@ -65,9 +65,10 @@ export default function App() {
           こんな困り事ありませんか?
         </Heading>
         <SimpleGrid
-          w="5xl"
+          w="4xl"
+          _media={[{ maxW: '768px', css: { w: 'xl' } }]}
           columns={{ base: 2, md: 1 }}
-          // gap="md"
+          gap="xl"
           margin="20px auto"
         >
           <GridItem
