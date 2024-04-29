@@ -16,11 +16,14 @@ export default function SignUp() {
   const handleSignUp: FormEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:8080/api/auth', {
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-      })
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_ENDPOINT + '/auth',
+        {
+          email,
+          password,
+          password_confirmation: passwordConfirmation,
+        },
+      )
       login(
         response.headers['uid'],
         response.headers['client'],
