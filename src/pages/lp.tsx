@@ -13,7 +13,6 @@ import {
   Link,
   Heading,
   Box,
-  Text,
   SimpleGrid,
   GridItem,
 } from '@yamada-ui/react'
@@ -32,23 +31,25 @@ export default function App() {
           CatlogEasyとは?
         </Heading>
         <Box textAlign="center">
-          <Text fontSize="xl" isTruncated>
-            主に陶器(日用品を含む)の画像付きのカタログを作りたいが難しい操作をしたくない！という方向けのカタログ作成アプリです。
+          <Box fontSize="xl" wordBreak="break-word">
+            主に陶器(日用品を含む)の画像付きのカタログを作りたいが難しい操作をしたくない！という方へ向けたカタログ作成アプリです。
+            <br />
             <br />
             商品データと商品画像を登録することで簡単にカタログ作成ができます。
-          </Text>
+          </Box>
           <Image
             src="app_image.png"
             alt="app_image"
             margin="30px auto"
-            w="40%"
+            w="45%"
             bg="white"
-            // style={{
-            //   padding: '50px',
-            //   borderRadius: '10px',
-            //   border: '0.2rem solid',
-            //   borderColor: '#2563eb',
-            // }}
+            style={{
+              padding: '50px',
+              borderRadius: '10px',
+              border: '0.2rem solid',
+              borderColor: '#2563eb',
+            }}
+            _media={[{ maxW: '1400px', css: { w: '60%' } }]}
           />
         </Box>
       </Box>
