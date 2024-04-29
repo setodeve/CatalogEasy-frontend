@@ -49,7 +49,11 @@ export default function DynamicForm() {
   //   console.log(e, data)
   // }
 
-  const handleImageChange = (index: number, src: string, id: string) => {
+  const handleImageChange = (
+    index: number,
+    src: string | null,
+    id: string | null,
+  ) => {
     setValue(`product.${index}.image`, src)
     setValue(`product.${index}.product_image_id`, id)
     setImageUpdated(!imageUpdated)
@@ -103,9 +107,14 @@ export default function DynamicForm() {
           <Controller
             name="product"
             control={control}
+            // @ts-expect-error function from react-hook-form
             render={() => <CSVDataTable append={append} />}
           />
-          <Catalog productInfo={getValues('product')} />
+
+          <Catalog
+            // @ts-expect-error function from react-hook-form
+            productInfo={getValues('product')}
+          />
         </HStack>
         {splitArrayIntoChunksOfSix(fields).map((chunk, chunkIndex) => {
           return (

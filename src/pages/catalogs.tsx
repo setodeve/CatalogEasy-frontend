@@ -23,6 +23,7 @@ export default function App() {
     if (isLoggedIn) {
       fetchCatalogsData()
         .then((res) => {
+          // @ts-expect-error expect CatalogData
           setCatalogs(res)
         })
         .catch((err) => {

@@ -11,12 +11,12 @@ import {
   VStack,
 } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import type { ProductInfo } from '@/types/product'
+import type { ProductsData } from '@/types/product'
 
 export default function ConfirmForm({
   productInfo,
 }: {
-  productInfo: ProductInfo[]
+  productInfo: ProductsData[]
 }) {
   return (
     <>
@@ -41,7 +41,7 @@ export default function ConfirmForm({
               templateColumns="repeat(3, 1fr)"
               gap="sm"
             >
-              {chunk.map((f: ProductInfo, fieldIndex: number) => {
+              {chunk.map((f: ProductsData, fieldIndex: number) => {
                 const absoluteIndex = chunkIndex * 6 + fieldIndex
                 return (
                   <GridItem

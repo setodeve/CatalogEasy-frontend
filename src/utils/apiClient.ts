@@ -1,4 +1,4 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
@@ -29,7 +29,7 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-export const apiRequest = async <T = unknown, R = AxiosResponse>(
+export const apiRequest = async <T = unknown, R = unknown>(
   method: string,
   url: string,
   requestData?: T,

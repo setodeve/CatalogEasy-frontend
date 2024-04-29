@@ -2,31 +2,30 @@ import { faImage, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { Image, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useDrop } from 'react-dnd'
-const DropZone = ({
-  index,
-  change,
-}: {
-  index: number
-  change: (
-    index: number,
-    image: string | null,
-    product_image_id: string | null,
-  ) => void
-}) => {
+import type { ImageDropProps } from '@/types/image-drop'
+
+const DropZone = ({ index, change }: ImageDropProps) => {
   const [droppedImage, setDroppedImage] = useState<string | null>(null)
   const [droppedImageId, setDroppedImageId] = useState<string | null>(null)
   const [hover, setHover] = useState(false)
-  const [, drop] = useDrop(() => ({
-    accept: 'image',
-    drop: (item: { id: string; src: string } | null) => {
-      if (item && item.src) {
-        setDroppedImage(item.src)
-        setDroppedImageId(item.id)
-      }
-    },
-  }))
+
+  const ref = useRef<HTMLDivElement>(null)
+  const [, drop] = useDrop(
+    () => ({
+      accept: 'image',
+      drop: (item: { id: string; src: string } | null) => {
+        if (item && item.src) {
+          setDroppedImage(item.src)
+          setDroppedImageId(item.id)
+        }
+      },
+    }),
+    [setDroppedImage, setDroppedImageId],
+  )
+
+  drop(ref)
 
   const removeSelectedImage = () => {
     setDroppedImage(null)
@@ -36,7 +35,7 @@ const DropZone = ({
   return (
     <>
       {droppedImage ? (
-        <VStack ref={drop} style={styles.image}>
+        <VStack ref={ref} style={styles.image}>
           <Icon
             onClick={removeSelectedImage}
             style={styles.imageDelete}
@@ -44,7 +43,6 @@ const DropZone = ({
             size="xl"
             _media={[{ type: 'print', css: { display: 'none' } }]}
           />
-
           <Image
             src={droppedImage}
             alt="Dropped content"
@@ -54,7 +52,7 @@ const DropZone = ({
         </VStack>
       ) : (
         <VStack
-          ref={drop}
+          ref={ref}
           style={hover ? styles.hoveredStyle : styles.imageContainer}
           onDragEnter={() => setHover(true)}
           onDrop={() => setHover(false)}

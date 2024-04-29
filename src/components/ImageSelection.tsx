@@ -41,6 +41,7 @@ const ImageSelection = () => {
     if (isLoggedIn)
       fetchImageData()
         .then((res) => {
+          // @ts-expect-error expect ImageSelectionData
           setImages(res)
         })
         .catch((err) => {

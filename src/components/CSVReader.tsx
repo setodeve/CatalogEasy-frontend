@@ -4,6 +4,7 @@ import {
   lightenDarkenColor,
   useCSVReader,
 } from 'react-papaparse'
+import type { resultType, CSVReaderProps } from '@/types/csv-reader'
 
 const GREY = '#CCC'
 const GREY_LIGHT = 'rgba(255, 255, 255, 0.4)'
@@ -87,7 +88,7 @@ const styles = {
   },
 }
 
-export default function CSVReader({ setUploadedData }) {
+export default function CSVReader({ setUploadedData }: CSVReaderProps) {
   const { CSVReader } = useCSVReader()
   const [uploadedList, setUploadedList] = useState([])
 
@@ -95,23 +96,31 @@ export default function CSVReader({ setUploadedData }) {
 
   return (
     <CSVReader
-      onUploadAccepted={(results) => {
-        const _uploadedData = results.data ?? []
-        setUploadedList(_uploadedData.slice(1))
-        setUploadedData(_uploadedData.slice(1))
+      onUploadAccepted={(results: resultType) => {
+        console.log(results)
+        const uploadedData = results.data ?? []
+        // @ts-expect-error remove header
+        setUploadedList(uploadedData.slice(1))
+        // @ts-expect-error remove header
+        setUploadedData(uploadedData.slice(1))
       }}
-      onDragOver={(event) => {
+      onDragOver={(event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
       }}
-      onDragLeave={(event) => {
+      onDragLeave={(event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
       }}
     >
       {({
+        // @ts-expect-error function from dropzone
         getRootProps,
+        // @ts-expect-error file from droozone
         acceptedFile,
+        // @ts-expect-error component from droozone
         ProgressBar,
+        // @ts-expect-error props from droozone
         getRemoveFileProps,
+        // @ts-expect-error component from droozone
         Remove,
       }) => (
         <div

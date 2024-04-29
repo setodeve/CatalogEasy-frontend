@@ -13,13 +13,13 @@ import {
 } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
-import type { ProductData } from '@/types/product'
+
 export default function CSVDataTable({
   append,
 }: {
-  append: (data: ProductData | [] | null) => void
+  append: (data: unknown) => void
 }) {
-  const [_, setUploadedList] = useState<ProductData | [] | null>([])
+  const [_, setUploadedList] = useState<unknown>([])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const notice = useNotice({ limit: 1 })
 

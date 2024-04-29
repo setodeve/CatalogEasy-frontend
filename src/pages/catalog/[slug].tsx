@@ -9,10 +9,14 @@ import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 
 export default function Page() {
   const router = useRouter()
-  const [catalog, setCatalog] = useState(null)
+  const [catalog, setCatalog] = useState<unknown>(null)
   const { isLoggedIn } = useAuth()
-
+  const [isRouter, setIsRouter] = useState<string | null>(null)
   useEffect(() => {
+    if (isRouter === router.pathname) {
+      return
+    }
+    setIsRouter(router.pathname)
     if (isLoggedIn && router.query.slug)
       fetchCatalogData(router.query.slug)
         .then((res) => {
@@ -20,8 +24,9 @@ export default function Page() {
         })
         .catch((err) => {
           console.error(err)
+          router.push('/catalogs')
         })
-  }, [isLoggedIn, router.query.slug])
+  }, [isLoggedIn, router.query.slug, router.pathname, router, isRouter])
 
   return (
     <>
@@ -47,6 +52,7 @@ export default function Page() {
       </VStack>
       <Flex justify="center" align="center" direction="column">
         {catalog ? (
+          // @ts-expect-error expect this type
           <ConfirmForm productInfo={catalog} />
         ) : (
           <Loading

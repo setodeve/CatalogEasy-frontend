@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const uid = Cookies.get('uid')
 
       const sessionData = await fetchSessionData()
+      // @ts-expect-error expect including is_login
       const shouldLogIn = sessionData.is_login && uid !== undefined
 
       if (isLoggedIn !== shouldLogIn) {

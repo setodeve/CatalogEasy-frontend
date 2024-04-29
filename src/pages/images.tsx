@@ -14,6 +14,7 @@ export default function Images() {
     if (isLoggedIn)
       fetchImageData()
         .then((res) => {
+          // @ts-expect-error expect this type
           setImages(res)
         })
         .catch((err) => {

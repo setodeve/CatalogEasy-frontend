@@ -1,5 +1,5 @@
 import ConfirmForm from '@/components/ConfirmForm'
-import type { ProductData } from '@/types/product'
+import type { ProductsData } from '@/types/product'
 import { uploadProductData } from '@/utils/fetchData'
 import {
   faCheck,
@@ -22,12 +22,16 @@ import {
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
 
-export default function Catalog({ productInfo }) {
+export default function Catalog({
+  productInfo,
+}: {
+  productInfo: ProductsData[]
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const notice = useNotice({ limit: 1 })
 
-  const onSubmit = (data: ProductData) => {
+  const onSubmit = async (data: ProductsData[]): Promise<void> => {
     uploadProductData({ products: data })
       .then(() => {
         notice({
