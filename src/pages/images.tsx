@@ -24,6 +24,7 @@ export default function Images() {
             status: 'error',
           })
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn])
 
   return (

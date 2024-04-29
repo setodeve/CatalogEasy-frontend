@@ -1,4 +1,3 @@
-import type { CSVData } from '@/types/csv-data-table'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import {
