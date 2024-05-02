@@ -97,7 +97,6 @@ export default function CSVReader({ setUploadedData }: CSVReaderProps) {
   return (
     <CSVReader
       onUploadAccepted={(results: resultType) => {
-        console.log(results)
         const uploadedData = results.data ?? []
         // @ts-expect-error remove header
         setUploadedList(uploadedData.slice(1))

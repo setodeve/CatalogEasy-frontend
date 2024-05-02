@@ -31,7 +31,6 @@ export default function SignUp() {
       )
       setIsLoggedIn(true)
       router.push('/')
-      console.log('Signup success:', response)
     } catch (error) {
       console.error('Signup error:', error)
     }
