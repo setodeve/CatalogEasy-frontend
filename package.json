@@ -16,6 +16,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@radix-ui/react-menubar": "^1.0.4",
     "@types/js-cookie": "^3.0.6",
     "@yamada-ui/dropzone": "^1.0.20",
     "@yamada-ui/fontawesome": "^1.0.17",

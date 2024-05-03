@@ -19,6 +19,7 @@ import {
   VStack,
   useDisclosure,
   useNotice,
+  IconButton,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
 
@@ -65,10 +66,16 @@ export default function Catalog({
           padding: '10px',
         }}
         leftIcon={<FontAwesomeIcon icon={faCircleCheck} />}
+        _media={[{ maxW: '850px', css: { display: 'none' } }]}
       >
         確認する
       </Button>
-
+      <IconButton
+        onClick={onOpen}
+        colorScheme="primary"
+        icon={<FontAwesomeIcon icon={faCircleCheck} />}
+        _media={[{ minW: '850px', css: { display: 'none' } }]}
+      />
       <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalCloseButton style={{ opacity: 0 }} isDisabled />
         <ModalOverlay backdropFilter="blur(10px)" />
