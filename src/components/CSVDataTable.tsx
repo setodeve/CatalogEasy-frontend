@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   useDisclosure,
   useNotice,
+  IconButton,
 } from '@yamada-ui/react'
 import { useState } from 'react'
 import CSVReader from './CSVReader'
@@ -59,9 +60,16 @@ export default function CSVDataTable({
           padding: '10px',
         }}
         leftIcon={<FontAwesomeIcon icon={faFileImport} />}
+        _media={[{ maxW: '850px', css: { display: 'none' } }]}
       >
         CSVからインポート
       </Button>
+      <IconButton
+        onClick={onOpen}
+        colorScheme="primary"
+        icon={<FontAwesomeIcon icon={faFileImport} />}
+        _media={[{ minW: '850px', css: { display: 'none' } }]}
+      />
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
           <ModalCloseButton color="red.500" />
