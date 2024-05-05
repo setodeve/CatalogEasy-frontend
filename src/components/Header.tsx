@@ -29,7 +29,7 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from '@/components/menubar'
+} from '@/components/MenuBar'
 
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth()
