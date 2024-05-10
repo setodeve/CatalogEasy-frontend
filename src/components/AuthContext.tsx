@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLoggedIn(shouldLogIn)
         if (
           !shouldLogIn &&
-          ['/lp', '/toc', '/pp'].every((item) => item !== router.pathname)
+          ['/', '/toc', '/pp'].every((item) => item !== router.pathname)
         ) {
           router.push('/auth/login')
         } else if (
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             (item) => item === router.pathname,
           )
         ) {
-          router.push('/')
+          router.push('/main')
         }
       }
     }

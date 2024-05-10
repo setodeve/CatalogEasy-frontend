@@ -80,7 +80,7 @@ export default function Header() {
           size="md"
           color="white"
           border="unset"
-          onClick={() => navigate('/lp#usage')}
+          onClick={() => navigate('/#usage')}
           leftIcon={<FontAwesomeIcon color="white" icon={faCircleQuestion} />}
         >
           使い方を見る
@@ -92,7 +92,7 @@ export default function Header() {
               colorScheme="primary"
               bg="white"
               size="md"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/main')}
               leftIcon={<FontAwesomeIcon icon={faHouse} />}
             />
             <Button
@@ -166,13 +166,13 @@ export default function Header() {
             <FontAwesomeIcon icon={faBars} color="primary" />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => navigate('/lp#usage')}>
+            <MenubarItem onClick={() => navigate('/#usage')}>
               使い方を見る
             </MenubarItem>
             <MenubarSeparator />
             {isLoggedIn ? (
               <>
-                <MenubarItem onClick={() => navigate('/')}>
+                <MenubarItem onClick={() => navigate('/main')}>
                   カタログ作成
                 </MenubarItem>
                 <MenubarSeparator />
@@ -208,7 +208,7 @@ export default function Header() {
       as="header"
       bg="primary"
       style={{
-        width: router.pathname === '/' ? '50%' : '100%',
+        width: router.pathname === '/main' ? '50%' : '100%',
         padding: '5px 0',
         height: '70px',
         display: 'fixed',

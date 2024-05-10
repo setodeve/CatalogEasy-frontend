@@ -48,7 +48,7 @@ export default function ImageUpload() {
             description: '画像アップデートに成功しました',
             placement: 'bottom-right',
           })
-          router.push('/')
+          router.push('/main')
         })
         .catch((err) => {
           console.error(err)
