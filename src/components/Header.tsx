@@ -5,6 +5,10 @@ import {
   Heading,
   Image,
   useNotice,
+  Modal,
+  ModalBody,
+  useDisclosure,
+  Link,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
 import { useRef, useCallback } from 'react'
@@ -30,12 +34,14 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from '@/components/MenuBar'
+import Usage from '@/components/Usage'
 
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth()
   const submitProcessing = useRef(false)
   const router = useRouter()
   const notice = useNotice({ limit: 1 })
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const navigate = useCallback(
     (url: string) => {
       if (submitProcessing.current) return
@@ -80,11 +86,25 @@ export default function Header() {
           size="md"
           color="white"
           border="unset"
-          onClick={() => navigate('/lp#usage')}
+          onClick={onOpen}
           leftIcon={<FontAwesomeIcon color="white" icon={faCircleQuestion} />}
         >
           使い方を見る
         </Button>
+        <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+          {/* <ModalHeader>ドラゴンボール</ModalHeader> */}
+
+          <ModalBody>
+            <Usage />
+          </ModalBody>
+
+          {/* <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              とじる
+            </Button>
+            <Button colorScheme="primary">Wikipadia</Button>
+          </ModalFooter> */}
+        </Modal>
         {isLoggedIn ? (
           <>
             <Button
@@ -92,7 +112,7 @@ export default function Header() {
               colorScheme="primary"
               bg="white"
               size="md"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/main')}
               leftIcon={<FontAwesomeIcon icon={faHouse} />}
             />
             <Button
@@ -166,13 +186,13 @@ export default function Header() {
             <FontAwesomeIcon icon={faBars} color="primary" />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => navigate('/lp#usage')}>
+            <MenubarItem onClick={() => navigate('/#usage')}>
               使い方を見る
             </MenubarItem>
             <MenubarSeparator />
             {isLoggedIn ? (
               <>
-                <MenubarItem onClick={() => navigate('/')}>
+                <MenubarItem onClick={() => navigate('/main')}>
                   カタログ作成
                 </MenubarItem>
                 <MenubarSeparator />
@@ -208,7 +228,7 @@ export default function Header() {
       as="header"
       bg="primary"
       style={{
-        width: router.pathname === '/' ? '50%' : '100%',
+        width: router.pathname === '/main' ? '50%' : '100%',
         padding: '5px 0',
         height: '70px',
         display: 'fixed',
@@ -219,17 +239,20 @@ export default function Header() {
       _media={[{ type: 'print', css: { display: 'none' } }]}
     >
       <HStack justifyContent="space-between" mt="10px">
-        <HStack>
-          <Image
-            h="35px"
-            src="../catalogcat_white.png"
-            alt="Company Logo"
-            ml="20px"
-          />
-          <Heading as="h4" size="md">
-            CatalogEasy
-          </Heading>
-        </HStack>
+        <Link href="/">
+          <HStack>
+            <Image
+              h="35px"
+              src="../catalogcat_white.png"
+              alt="Company Logo"
+              ml="20px"
+            />
+            <Heading as="h4" size="md" color="white">
+              CatalogEasy
+            </Heading>
+          </HStack>
+        </Link>
+
         <HStack>
           <HStack _media={[{ maxW: '1400px', css: { display: 'none' } }]}>
             <HeaderButton />

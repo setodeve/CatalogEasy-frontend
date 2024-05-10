@@ -30,7 +30,7 @@ export default function SignUp() {
         response.headers['access-token'],
       )
       setIsLoggedIn(true)
-      router.push('/')
+      router.push('/main')
     } catch (error) {
       console.error('Signup error:', error)
     }

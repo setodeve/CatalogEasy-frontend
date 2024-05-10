@@ -2,7 +2,7 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import { Check, X } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import React from 'react'
 
 const timelineVariants = cva('flex flex-col items-stretch', {

@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <DndProvider backend={HTML5Backend}>
             <Header />
             <Component {...pageProps} />
-            {['/lp', '/toc', '/pp'].some((item) => item === router.pathname) ? (
+            {['/', '/toc', '/pp'].some((item) => item === router.pathname) ? (
               <Footer />
             ) : null}
           </DndProvider>

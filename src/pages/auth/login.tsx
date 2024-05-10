@@ -28,7 +28,7 @@ export default function Login() {
         response.headers['access-token'],
       )
       setIsLoggedIn(true)
-      router.push('/')
+      router.push('/main')
       notice({
         description: 'ログインに成功しました',
         placement: 'bottom-right',
@@ -50,7 +50,7 @@ export default function Login() {
     //     res.headers['access-token'],
     //   )
     //   setIsLoggedIn(true)
-    //   router.push('/')
+    //   router.push('/main')
     //   notice({
     //     description: 'ログインに成功しました',
     //     placement: 'bottom-right',
