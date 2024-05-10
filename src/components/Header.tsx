@@ -35,7 +35,7 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from '@/components/menubar'
+} from '@/components/Menu'
 import Usage from '@/components/Usage'
 import type { FormEventHandler } from 'react'
 import axios from 'axios'
