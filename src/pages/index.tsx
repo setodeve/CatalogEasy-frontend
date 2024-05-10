@@ -31,7 +31,7 @@ export default function App() {
             商品データと商品画像を登録することで簡単にカタログ作成ができます。
           </Box>
           <Image
-            src="app_image.png"
+            src="../app_image.png"
             alt="app_image"
             margin="30px auto"
             w="45%"
@@ -83,7 +83,12 @@ export default function App() {
             >
               お客様に商品をまとめた資料を出したいけど難しいツールは使えない。。
             </Heading>
-            <Image src="person1.png" alt="person" w="135px" margin="0 auto" />
+            <Image
+              src="../person1.png"
+              alt="person"
+              w="135px"
+              margin="0 auto"
+            />
           </GridItem>
           <GridItem
             w="md"
@@ -103,7 +108,12 @@ export default function App() {
             >
               商品データと商品画像あるけど扱いに困っている。。
             </Heading>
-            <Image src="person2.png" alt="person" w="139px" margin="0 auto" />
+            <Image
+              src="../person2.png"
+              alt="person"
+              w="139px"
+              margin="0 auto"
+            />
           </GridItem>
         </SimpleGrid>
       </Box>
@@ -136,12 +146,12 @@ export default function App() {
             <TimelineLine done />
             <TimelineContent>
               商品画像を登録するため、画面のプラスボタンを押してください。
-              <Image src="plus_header.png" alt="plus_header" w="50%" />
+              <Image src="../plus_header.png" alt="plus_header" w="50%" />
               商品画像を選択して、登録予定の画像に認識まちがいないか確認したら、
               <br />
               アップロードボタンを押してください。
               <br />
-              <Image src="upload_image.gif" alt="plus_header" />
+              <Image src="../upload_image.gif" alt="plus_header" />
               <br />
             </TimelineContent>
           </TimelineItem>
@@ -152,19 +162,19 @@ export default function App() {
             <TimelineContent>
               商品情報を登録するため、画面の家ボタンを押してください。
               <Image
-                src="product_header.png"
+                src="../product_header.png"
                 alt="product_header"
                 w="50%"
                 alignItems="center"
               />
               <br />
               商品ごとに製品名、サイズ、卸価格、小売価格、備考の情報を登録できます。
-              <Image src="enter_info.gif" alt="plus_header" />
+              <Image src="../enter_info.gif" alt="plus_header" />
               <br />
               以下のようなCSV形式の商品データがある場合、
               <br />
               「CSVからインポート」ボタンを押すことで一括で商品情報を入力することができます
-              <Image src="import_csv.png" alt="plus_header" w="40%" />
+              <Image src="../import_csv.png" alt="plus_header" w="40%" />
               <br />
             </TimelineContent>
           </TimelineItem>
@@ -177,7 +187,7 @@ export default function App() {
               <br />
               右側の画像を左側の任意の商品にドラッグ&ドロップしてください。
               <br />
-              <Image src="drag_image.gif" alt="drag_image" />
+              <Image src="../drag_image.gif" alt="drag_image" />
             </TimelineContent>
           </TimelineItem>
           <TimelineItem status="done">
@@ -191,7 +201,7 @@ export default function App() {
               <br />
               ここで問題がなければ、「問題なし」ボタンを押すことでカタログを作成することができます。
               <br />
-              <Image src="confirm.gif" alt="plus_header" />
+              <Image src="../confirm.gif" alt="plus_header" />
             </TimelineContent>
           </TimelineItem>
           <TimelineItem status="done">
@@ -200,10 +210,10 @@ export default function App() {
             <TimelineLine done />
             <TimelineContent>
               「リスト」ボタンを押すことで作成したカタログ一覧の確認ができます。
-              <Image src="list_header.png" alt="plus_header" w="50%" />
+              <Image src="../list_header.png" alt="plus_header" w="50%" />
               <br />
               カタログ一覧からそれぞれのカタログを確認や印刷,PDF化することができます。
-              <Image src="catalog.gif" alt="plus_header" />
+              <Image src="../catalog.gif" alt="plus_header" />
             </TimelineContent>
           </TimelineItem>
         </Timeline>
