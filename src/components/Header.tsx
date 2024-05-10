@@ -57,7 +57,6 @@ export default function Header() {
 
   const handleLogin: FormEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault()
-    console.log(e.target)
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_API_ENDPOINT + '/auth/sign_in',
