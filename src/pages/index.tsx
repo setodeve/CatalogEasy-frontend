@@ -7,22 +7,9 @@ import {
   TimelineItem,
   TimelineLine,
 } from '@/components/TimeLine'
-// import { Carousel, CarouselSlide } from '@yamada-ui/carousel'
 import { Image, Heading, Box, SimpleGrid, GridItem } from '@yamada-ui/react'
-import EmblaCarousel from '@/components/EmblaCarousel/EmblaCarousel'
-import type { EmblaOptionsType } from 'embla-carousel'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/Carousel'
 
 export default function App() {
-  const OPTIONS: EmblaOptionsType = { align: 'start', loop: true }
-  const SLIDE_COUNT = 5
-  const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
   return (
     <Box>
       <Box padding="50px 0">
@@ -143,16 +130,6 @@ export default function App() {
             borderColor: '#2563eb',
           }}
         >
-          <Carousel>
-            <CarouselContent>
-              <CarouselItem>...</CarouselItem>
-              <CarouselItem>...</CarouselItem>
-              <CarouselItem>...</CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-          {/* <EmblaCarousel slides={SLIDES} options={OPTIONS} /> */}
           <TimelineItem status="done">
             <TimelineHeading>画像を登録しよう</TimelineHeading>
             <TimelineDot status="current" num="1" />
@@ -163,6 +140,9 @@ export default function App() {
               商品画像を選択して、登録予定の画像に認識まちがいないか確認したら、
               <br />
               アップロードボタンを押してください。
+              <br />
+              <Image src="upload_image.gif" alt="plus_header" />
+              <br />
             </TimelineContent>
           </TimelineItem>
           <TimelineItem status="done">
@@ -170,13 +150,21 @@ export default function App() {
             <TimelineDot status="current" num="2" />
             <TimelineLine done />
             <TimelineContent>
-              <Image src="product_header.png" alt="product_header" w="50%" />
+              商品情報を登録するため、画面の家ボタンを押してください。
+              <Image
+                src="product_header.png"
+                alt="product_header"
+                w="50%"
+                alignItems="center"
+              />
               <br />
               商品ごとに製品名、サイズ、卸価格、小売価格、備考の情報を登録できます。
-              画像
+              <Image src="enter_info.gif" alt="plus_header" />
               <br />
-              以下のようなCSV形式のデータがある場合一括で商品情報を入力することができます
-              画像
+              以下のようなCSV形式の商品データがある場合、
+              <br />
+              「CSVからインポート」ボタンを押すことで一括で商品情報を入力することができます
+              <Image src="import_csv.png" alt="plus_header" w="40%" />
               <br />
             </TimelineContent>
           </TimelineItem>
@@ -185,8 +173,11 @@ export default function App() {
             <TimelineDot status="current" num="3" />
             <TimelineLine done />
             <TimelineContent>
-              入力した商品情報と登録した画像を紐づけるために、右側の画像を左側の任意の商品にドラッグ&ドロップしてください。
+              入力した商品情報と登録した画像を紐づけるために、
               <br />
+              右側の画像を左側の任意の商品にドラッグ&ドロップしてください。
+              <br />
+              <Image src="drag_image.gif" alt="drag_image" />
             </TimelineContent>
           </TimelineItem>
           <TimelineItem status="done">
@@ -195,16 +186,24 @@ export default function App() {
             <TimelineLine done />
             <TimelineContent>
               商品情報と商品写真が紐づいた内容に認識間違いがないことを確認するために、「確認する」ボタンを押してください。
+              <br />
               どのように印刷されるかのイメージを確認できます。
+              <br />
               ここで問題がなければ、「問題なし」ボタンを押すことでカタログを作成することができます。
+              <br />
+              <Image src="confirm.gif" alt="plus_header" />
             </TimelineContent>
           </TimelineItem>
           <TimelineItem status="done">
             <TimelineHeading>カタログ完成!</TimelineHeading>
             <TimelineDot status="current" num="5" />
+            <TimelineLine done />
             <TimelineContent>
               「リスト」ボタンを押すことで作成したカタログ一覧の確認ができます。
               <Image src="list_header.png" alt="plus_header" w="50%" />
+              <br />
+              カタログ一覧からそれぞれのカタログを確認や印刷,PDF化することができます。
+              <Image src="catalog.gif" alt="plus_header" />
             </TimelineContent>
           </TimelineItem>
         </Timeline>
