@@ -9,6 +9,7 @@ import {
   ModalBody,
   useDisclosure,
   Link,
+  VStack,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
 import { useRef, useCallback } from 'react'
@@ -21,10 +22,11 @@ import {
   faList,
   faPlus,
   faBars,
+  faCat,
 } from '@fortawesome/free-solid-svg-icons'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
 import { useAuth } from '@/components/AuthContext'
-import { logout } from '@/utils/auth'
+import { logout, login } from '@/utils/auth'
 import { signoutUserData } from '@/utils/fetchData'
 import {
   Menubar,
@@ -35,7 +37,8 @@ import {
   MenubarTrigger,
 } from '@/components/MenuBar'
 import Usage from '@/components/Usage'
-
+import type { FormEventHandler } from 'react'
+import axios from 'axios'
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth()
   const submitProcessing = useRef(false)
@@ -51,6 +54,38 @@ export default function Header() {
     },
     [router],
   )
+
+  const handleLogin: FormEventHandler<HTMLDivElement> = async (e) => {
+    e.preventDefault()
+    console.log(e.target)
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_API_ENDPOINT + '/auth/sign_in',
+        {
+          email: process.env.NEXT_PUBLIC_EMAIL,
+          password: process.env.NEXT_PUBLIC_PASSWORD,
+        },
+      )
+      login(
+        response.headers['uid'],
+        response.headers['client'],
+        response.headers['access-token'],
+      )
+      setIsLoggedIn(true)
+      router.push('/main')
+      notice({
+        description: 'ログインに成功しました',
+        placement: 'bottom-right',
+      })
+    } catch (error) {
+      notice({
+        description: 'ログインに失敗しました',
+        placement: 'bottom-right',
+        status: 'error',
+      })
+      console.error('Login error:', error)
+    }
+  }
 
   const handleLogout = async () => {
     if (submitProcessing.current) return
@@ -92,18 +127,9 @@ export default function Header() {
           使い方を見る
         </Button>
         <Modal isOpen={isOpen} onClose={onClose} size="6xl">
-          {/* <ModalHeader>ドラゴンボール</ModalHeader> */}
-
           <ModalBody>
             <Usage />
           </ModalBody>
-
-          {/* <ModalFooter>
-            <Button variant="ghost" onClick={onClose}>
-              とじる
-            </Button>
-            <Button colorScheme="primary">Wikipadia</Button>
-          </ModalFooter> */}
         </Modal>
         {isLoggedIn ? (
           <>
@@ -153,11 +179,25 @@ export default function Header() {
       </Button>
     ) : (
       <HStack>
+        <VStack as="form" onSubmit={handleLogin}>
+          <Button
+            type="submit"
+            name="guestlogin"
+            variant="outline"
+            colorScheme="primary"
+            bg="white"
+            size="md"
+            leftIcon={<FontAwesomeIcon icon={faCat} />}
+          >
+            Guestでログインする
+          </Button>
+        </VStack>
         <Button
           variant="outline"
           colorScheme="primary"
           bg="white"
           size="md"
+          width="100%"
           onClick={() => navigate('/auth/login')}
           leftIcon={<FontAwesomeIcon icon={faRightToBracket} />}
         >
@@ -169,6 +209,7 @@ export default function Header() {
           bg="white"
           size="md"
           mr="30px"
+          width="100%"
           onClick={() => navigate('/auth/signup')}
           leftIcon={<FontAwesomeIcon icon={faUserPlus} />}
         >
