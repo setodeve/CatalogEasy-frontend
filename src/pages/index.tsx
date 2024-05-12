@@ -147,6 +147,7 @@ export default function App() {
             <TimelineContent>
               商品画像を登録するため、画面のプラスボタンを押してください。
               <Image src="../plus_header.png" alt="plus_header" w="50%" />
+              <br />
               商品画像を選択して、登録予定の画像に認識まちがいないか確認したら、
               <br />
               アップロードボタンを押してください。
@@ -161,14 +162,10 @@ export default function App() {
             <TimelineLine done />
             <TimelineContent>
               商品情報を登録するため、画面の家ボタンを押してください。
-              <Image
-                src="../product_header.png"
-                alt="product_header"
-                w="50%"
-                alignItems="center"
-              />
+              <Image src="../product_header.png" alt="product_header" w="50%" />
               <br />
               商品ごとに製品名、サイズ、卸価格、小売価格、備考の情報を登録できます。
+              <br />
               <Image src="../enter_info.gif" alt="plus_header" />
               <br />
               以下のようなCSV形式の商品データがある場合、

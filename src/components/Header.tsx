@@ -248,6 +248,10 @@ export default function Header() {
               </>
             ) : (
               <>
+                <MenubarItem onClick={(e) => handleLogin(e)}>
+                  Guestでログインする
+                </MenubarItem>
+                <MenubarSeparator />
                 <MenubarItem onClick={() => navigate('/auth/login')}>
                   ログイン
                 </MenubarItem>
