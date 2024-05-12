@@ -5,7 +5,7 @@ import { Check, X } from 'lucide-react'
 import { cn } from '@/utils/utils'
 import React from 'react'
 
-const timelineVariants = cva('flex flex-col items-stretch', {
+const timelineVariants = cva('items-stretch', {
   variants: {
     positions: {
       left: '[&>li]:grid-cols-[0_min-content_1fr]',
