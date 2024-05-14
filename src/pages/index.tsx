@@ -14,8 +14,10 @@ export default function App() {
 
   useEffect(() => {
     const userAgent = navigator.userAgent
-
-    if (userAgent.includes('Chrome')) {
+    // @ts-expect-error expect browserName
+    if (navigator.brave) {
+      setBrowserName('Safari')
+    } else if (userAgent.includes('Chrome')) {
       setBrowserName('Chrome')
     } else if (userAgent.includes('Firefox')) {
       setBrowserName('Firefox')
@@ -102,7 +104,7 @@ export default function App() {
             <Image
               src="../person1.png"
               alt="person"
-              w={browserName == 'Chrome' ? '68px' : '135px'}
+              w={browserName != 'Safari' ? '68px' : '135px'}
               margin="0 auto"
             />
           </GridItem>
