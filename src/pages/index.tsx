@@ -104,7 +104,7 @@ export default function App() {
             <Image
               src="../person1.png"
               alt="person"
-              w={browserName != 'Safari' ? '68px' : '135px'}
+              w={browserName == 'Chrome' ? '68px' : '135px'}
               margin="0 auto"
             />
           </GridItem>
