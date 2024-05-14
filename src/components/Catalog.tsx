@@ -39,14 +39,14 @@ export default function Catalog({
     // @ts-expect-error expect browserName
     if (navigator.brave) {
       setBrowserName('Safari')
+    } else if (userAgent.includes('Edg')) {
+      setBrowserName('Safari')
     } else if (userAgent.includes('Chrome')) {
       setBrowserName('Chrome')
     } else if (userAgent.includes('Firefox')) {
       setBrowserName('Firefox')
     } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
       setBrowserName('Safari')
-    } else if (userAgent.includes('Edge')) {
-      setBrowserName('Edge')
     }
   }, [])
 
