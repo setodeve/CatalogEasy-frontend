@@ -8,14 +8,12 @@ import {
   TimelineLine,
 } from '@/components/TimeLine'
 import { Image, Heading, Box, SimpleGrid, GridItem } from '@yamada-ui/react'
-import { log } from 'console'
 
 export default function App() {
   const [browserName, setBrowserName] = useState('Unknown')
 
   useEffect(() => {
     const userAgent = navigator.userAgent
-    console.log(userAgent)
     // @ts-expect-error expect browserName
     if (navigator.brave) {
       setBrowserName('Safari')
