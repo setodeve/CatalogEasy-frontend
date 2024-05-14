@@ -226,9 +226,7 @@ export default function Header() {
             <FontAwesomeIcon icon={faBars} color="primary" />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => navigate('/#usage')}>
-              使い方を見る
-            </MenubarItem>
+            <MenubarItem onClick={() => onOpen()}>使い方を見る</MenubarItem>
             <MenubarSeparator />
             {isLoggedIn ? (
               <>

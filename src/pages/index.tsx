@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Timeline,
   TimelineContent,
@@ -10,6 +10,22 @@ import {
 import { Image, Heading, Box, SimpleGrid, GridItem } from '@yamada-ui/react'
 
 export default function App() {
+  const [browserName, setBrowserName] = useState('Unknown')
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent
+
+    if (userAgent.includes('Chrome')) {
+      setBrowserName('Chrome')
+    } else if (userAgent.includes('Firefox')) {
+      setBrowserName('Firefox')
+    } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+      setBrowserName('Safari')
+    } else if (userAgent.includes('Edge')) {
+      setBrowserName('Edge')
+    }
+  }, [])
+
   return (
     <Box>
       <Box padding="50px 0">
@@ -61,7 +77,7 @@ export default function App() {
         <SimpleGrid
           w="4xl"
           _media={[{ maxW: '768px', css: { w: 'xl' } }]}
-          columns={{ base: 2, md: 1 }}
+          columns={{ base: 2, xl: 1 }}
           gap="xl"
           margin="20px auto"
         >
@@ -86,7 +102,7 @@ export default function App() {
             <Image
               src="../person1.png"
               alt="person"
-              w="135px"
+              w={browserName == 'Chrome' ? '68px' : '135px'}
               margin="0 auto"
             />
           </GridItem>
@@ -111,7 +127,7 @@ export default function App() {
             <Image
               src="../person2.png"
               alt="person"
-              w="139px"
+              w={browserName == 'Chrome' ? '70px' : '139px'}
               margin="0 auto"
             />
           </GridItem>
