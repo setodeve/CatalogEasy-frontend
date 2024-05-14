@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import {
   Timeline,
   TimelineContent,
@@ -10,24 +10,6 @@ import {
 import { Image, Heading, Box, SimpleGrid, GridItem } from '@yamada-ui/react'
 
 export default function App() {
-  const [browserName, setBrowserName] = useState('Unknown')
-
-  useEffect(() => {
-    const userAgent = navigator.userAgent
-    // @ts-expect-error expect browserName
-    if (navigator.brave) {
-      setBrowserName('Safari')
-    } else if (userAgent.includes('Edg')) {
-      setBrowserName('Safari')
-    } else if (userAgent.includes('Chrome')) {
-      setBrowserName('Chrome')
-    } else if (userAgent.includes('Firefox')) {
-      setBrowserName('Firefox')
-    } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
-      setBrowserName('Safari')
-    }
-  }, [])
-
   return (
     <Box>
       <Box padding="50px 0">
@@ -104,7 +86,7 @@ export default function App() {
             <Image
               src="../person1.png"
               alt="person"
-              w={browserName == 'Chrome' ? '68px' : '135px'}
+              w="135px"
               margin="0 auto"
             />
           </GridItem>
@@ -129,7 +111,7 @@ export default function App() {
             <Image
               src="../person2.png"
               alt="person"
-              w={browserName == 'Chrome' ? '70px' : '139px'}
+              w="139px"
               margin="0 auto"
             />
           </GridItem>

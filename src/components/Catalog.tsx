@@ -22,7 +22,7 @@ import {
   IconButton,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+
 export default function Catalog({
   productInfo,
 }: {
@@ -31,24 +31,6 @@ export default function Catalog({
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const notice = useNotice({ limit: 1 })
-
-  const [browserName, setBrowserName] = useState('Unknown')
-
-  useEffect(() => {
-    const userAgent = navigator.userAgent
-    // @ts-expect-error expect browserName
-    if (navigator.brave) {
-      setBrowserName('Safari')
-    } else if (userAgent.includes('Edg')) {
-      setBrowserName('Safari')
-    } else if (userAgent.includes('Chrome')) {
-      setBrowserName('Chrome')
-    } else if (userAgent.includes('Firefox')) {
-      setBrowserName('Firefox')
-    } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
-      setBrowserName('Safari')
-    }
-  }, [])
 
   const onSubmit = async (data: ProductsData[]): Promise<void> => {
     uploadProductData({ products: data })
@@ -94,11 +76,7 @@ export default function Catalog({
         icon={<FontAwesomeIcon icon={faCircleCheck} />}
         _media={[{ minW: '850px', css: { display: 'none' } }]}
       />
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size={browserName != 'Safari' ? 'full' : '6xl'}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
         <ModalCloseButton style={{ opacity: 0 }} isDisabled />
         <ModalOverlay backdropFilter="blur(10px)" />
         <ModalHeader

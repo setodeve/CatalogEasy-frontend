@@ -8,15 +8,16 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { AuthProvider } from '@/components/AuthContext'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import 'ress'
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
+
   return (
     <>
       <Head>
         <title>CatalogEasy</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         <link
           rel="icon"
           href="../catalogcat_white.png"

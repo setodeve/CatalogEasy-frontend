@@ -77,6 +77,9 @@ dependencies:
   react-papaparse:
     specifier: ^4.4.0
     version: 4.4.0
+  ress:
+    specifier: ^5.0.2
+    version: 5.0.2
   tailwind-merge:
     specifier: ^2.3.0
     version: 2.3.0
@@ -6700,6 +6703,10 @@ packages:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
     dev: true
+
+  /ress@5.0.2:
+    resolution: {integrity: sha512-oHBtOWo/Uc8SzQMbQNIKTcgi8wKmAs7IlNlRywmXudbOtF+c27FlOIq7tnwLDVcTywe6JXYo1pDXHO6kABwNYA==}
+    dev: false
 
   /reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
