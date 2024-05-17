@@ -5,6 +5,7 @@ import { VStack, Input, Button, useNotice } from '@yamada-ui/react'
 import { useAuth } from '@/components/AuthContext'
 import { login } from '@/utils/auth'
 import { useRouter } from 'next/router'
+import { headers } from 'next/headers'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -20,6 +21,12 @@ export default function Login() {
         {
           email,
           password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
         },
       )
       login(
