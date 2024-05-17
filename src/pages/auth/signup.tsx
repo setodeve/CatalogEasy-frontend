@@ -23,6 +23,12 @@ export default function SignUp() {
           password,
           password_confirmation: passwordConfirmation,
         },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        },
       )
       login(
         response.headers['uid'],
