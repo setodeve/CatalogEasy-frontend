@@ -39,7 +39,7 @@ import {
 import Usage from '@/components/Usage'
 import type { FormEventHandler } from 'react'
 import axios from 'axios'
-import { headers } from 'next/headers'
+
 export default function Header() {
   const { isLoggedIn, setIsLoggedIn } = useAuth()
   const submitProcessing = useRef(false)
