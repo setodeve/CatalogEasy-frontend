@@ -22,6 +22,7 @@ import {
   IconButton,
 } from '@yamada-ui/react'
 import { useRouter } from 'next/router'
+import { useCallback } from 'react'
 
 export default function Catalog({
   productInfo,
@@ -32,25 +33,28 @@ export default function Catalog({
   const router = useRouter()
   const notice = useNotice({ limit: 1 })
 
-  const onSubmit = async (data: ProductsData[]): Promise<void> => {
-    uploadProductData({ products: data })
-      .then(() => {
-        notice({
-          description: 'カタログ作成しました',
-          placement: 'bottom-right',
+  const onSubmit = useCallback(
+    async (data: ProductsData[]): Promise<void> => {
+      uploadProductData({ products: data })
+        .then(() => {
+          notice({
+            description: 'カタログ作成しました',
+            placement: 'bottom-right',
+          })
+          onClose()
+          router.push('/catalogs')
         })
-        onClose()
-        router.push('/catalogs')
-      })
-      .catch((err) => {
-        console.error(err)
-        notice({
-          description: 'カタログ作成に失敗しました',
-          placement: 'bottom-right',
-          status: 'error',
+        .catch((err) => {
+          console.error(err)
+          notice({
+            description: 'カタログ作成に失敗しました',
+            placement: 'bottom-right',
+            status: 'error',
+          })
         })
-      })
-  }
+    },
+    [notice, router, onClose],
+  )
 
   if (productInfo == null) {
     return null

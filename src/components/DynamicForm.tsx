@@ -15,7 +15,7 @@ import {
   Textarea,
 } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 export default function DynamicForm() {
   const formTemplate = {
@@ -30,7 +30,6 @@ export default function DynamicForm() {
   const {
     register,
     control,
-    // handleSubmit,
     getValues,
     setValue,
     formState: { errors },
@@ -45,19 +44,15 @@ export default function DynamicForm() {
     name: 'product',
     control,
   })
-  // const onSubmit = (e: React.FormEvent<HTMLFormElement>, data: ProductData) => {
-  //   console.log(e, data)
-  // }
 
-  const handleImageChange = (
-    index: number,
-    src: string | null,
-    id: string | null,
-  ) => {
-    setValue(`product.${index}.image`, src)
-    setValue(`product.${index}.product_image_id`, id)
-    setImageUpdated(!imageUpdated)
-  }
+  const handleImageChange = useCallback(
+    (index: number, src: string | null, id: string | null) => {
+      setValue(`product.${index}.image`, src)
+      setValue(`product.${index}.product_image_id`, id)
+      setImageUpdated(!imageUpdated)
+    },
+    [imageUpdated, setValue],
+  )
   return (
     <>
       {/* TODO 別のcssの当て方がないか検討する*/}
@@ -74,9 +69,6 @@ export default function DynamicForm() {
       </style>
       <VStack
         as="form"
-        // onSubmit={handleSubmit((e, data) => onSubmit(e, data))}
-        // style={styles.test}
-        // _media={[{ type: 'print', css: { width: '100%' } }]}
         className="printCatalog"
         style={{
           display: 'block',

@@ -56,44 +56,47 @@ export default function Header() {
     [router],
   )
 
-  const handleLogin: FormEventHandler<HTMLDivElement> = async (e) => {
-    e.preventDefault()
-    try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_API_ENDPOINT + '/auth/sign_in',
-        {
-          email: process.env.NEXT_PUBLIC_EMAIL,
-          password: process.env.NEXT_PUBLIC_PASSWORD,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
+  const handleLogin: FormEventHandler<HTMLDivElement> = useCallback(
+    async (e) => {
+      e.preventDefault()
+      try {
+        const response = await axios.post(
+          process.env.NEXT_PUBLIC_API_ENDPOINT + '/auth/sign_in',
+          {
+            email: process.env.NEXT_PUBLIC_EMAIL,
+            password: process.env.NEXT_PUBLIC_PASSWORD,
           },
-        },
-      )
-      login(
-        response.headers['uid'],
-        response.headers['client'],
-        response.headers['access-token'],
-      )
-      setIsLoggedIn(true)
-      router.push('/main')
-      notice({
-        description: 'ログインに成功しました',
-        placement: 'bottom-right',
-      })
-    } catch (error) {
-      notice({
-        description: 'ログインに失敗しました',
-        placement: 'bottom-right',
-        status: 'error',
-      })
-      console.error('Login error:', error)
-    }
-  }
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest',
+            },
+          },
+        )
+        login(
+          response.headers['uid'],
+          response.headers['client'],
+          response.headers['access-token'],
+        )
+        setIsLoggedIn(true)
+        router.push('/main')
+        notice({
+          description: 'ログインに成功しました',
+          placement: 'bottom-right',
+        })
+      } catch (error) {
+        notice({
+          description: 'ログインに失敗しました',
+          placement: 'bottom-right',
+          status: 'error',
+        })
+        console.error('Login error:', error)
+      }
+    },
+    [notice, router, setIsLoggedIn],
+  )
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     if (submitProcessing.current) return
     submitProcessing.current = true
 
@@ -116,7 +119,7 @@ export default function Header() {
         })
       })
     submitProcessing.current = false
-  }
+  }, [navigate, notice, setIsLoggedIn])
   const HeaderButton = () => {
     return (
       <HStack>
