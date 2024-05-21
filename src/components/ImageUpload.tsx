@@ -1,7 +1,7 @@
 import { Dropzone, IMAGE_ACCEPT_TYPE } from '@yamada-ui/dropzone'
 import { HStack, Image, Input, Text, useNotice, VStack } from '@yamada-ui/react'
 import type { FormEventHandler } from 'react'
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useAuth } from '@/components/AuthContext'
 import { uploadImageData } from '@/utils/fetchData'
 import { useRouter } from 'next/router'
@@ -11,7 +11,7 @@ export default function ImageUpload() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const { isLoggedIn } = useAuth()
   const router = useRouter()
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files)
       setSelectedFiles(filesArray)
@@ -22,7 +22,7 @@ export default function ImageUpload() {
         reader.onload = () => {
           const result = reader.result
           if (typeof result === 'string') {
-            setImgsSrc((imgs: string[]) => [...imgs, result])
+            setImgsSrc((imgs) => [...imgs, result])
           }
         }
         reader.onerror = () => {
@@ -30,36 +30,39 @@ export default function ImageUpload() {
         }
       })
     }
-  }
+  }, [])
 
   const notice = useNotice({ limit: 1 })
 
-  const handleSubmit: FormEventHandler<HTMLDivElement> = (e) => {
-    e.preventDefault()
-    if (isLoggedIn) {
-      const formData = new FormData()
-      selectedFiles.forEach((file) => {
-        formData.append('image[]', file)
-      })
+  const handleSubmit: FormEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      e.preventDefault()
+      if (isLoggedIn) {
+        const formData = new FormData()
+        selectedFiles.forEach((file) => {
+          formData.append('image[]', file)
+        })
 
-      uploadImageData(formData)
-        .then(() => {
-          notice({
-            description: '画像アップデートに成功しました',
-            placement: 'bottom-right',
+        uploadImageData(formData)
+          .then(() => {
+            notice({
+              description: '画像アップデートに成功しました',
+              placement: 'bottom-right',
+            })
+            router.push('/main')
           })
-          router.push('/main')
-        })
-        .catch((err) => {
-          console.error(err)
-          notice({
-            description: '画像アップデートに失敗しました',
-            placement: 'bottom-right',
-            status: 'error',
+          .catch((err) => {
+            console.error(err)
+            notice({
+              description: '画像アップデートに失敗しました',
+              placement: 'bottom-right',
+              status: 'error',
+            })
           })
-        })
-    }
-  }
+      }
+    },
+    [isLoggedIn, notice, router, selectedFiles],
+  )
 
   return (
     <>

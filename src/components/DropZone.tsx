@@ -2,7 +2,7 @@ import { faImage, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@yamada-ui/fontawesome'
 import { Image, VStack } from '@yamada-ui/react'
 import type { CSSProperties } from 'react'
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { useDrop } from 'react-dnd'
 import type { ImageDropProps } from '@/types/image-drop'
 
@@ -27,10 +27,10 @@ const DropZone = ({ index, change }: ImageDropProps) => {
 
   drop(ref)
 
-  const removeSelectedImage = () => {
+  const removeSelectedImage = useCallback(() => {
     setDroppedImage(null)
     change(index, null, null)
-  }
+  }, [change, index])
 
   return (
     <>

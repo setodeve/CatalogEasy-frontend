@@ -22,12 +22,8 @@ const DraggableImage = ({
   const styles: Record<string, CSSProperties> = {
     item: {
       maxWidth: '250px',
-      // border: '2px solid #ffa94d',
       border: isDragging ? '1px dashed gray' : 'none',
       opacity: isDragging ? 0.3 : 1,
-      // borderRadius: '8px',
-      // padding: '0.5rem',
-      // margin: '0.2rem',
       breakInside: 'avoid',
       cursor: 'pointer',
       objectFit: 'cover',

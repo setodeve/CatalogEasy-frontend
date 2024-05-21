@@ -44,12 +44,7 @@ export default function ConfirmForm({
               {chunk.map((f: ProductsData, fieldIndex: number) => {
                 const absoluteIndex = chunkIndex * 6 + fieldIndex
                 return (
-                  <GridItem
-                    key={absoluteIndex}
-                    // style={{ marginTop: '20px' }}
-                    w="full"
-                    h="4xs"
-                  >
+                  <GridItem key={absoluteIndex} w="full" h="4xs">
                     <h5>{`No.${absoluteIndex + 1}`}</h5>
                     <VStack className="section">
                       <VStack style={styles.image}>
@@ -129,7 +124,6 @@ const styles: Record<string, CSSProperties> = {
     margin: '0 auto',
   },
   imageContainer: {
-    // margin: 'auto',
     width: '200px',
     height: '200px',
     border: '1px dotted gray',
