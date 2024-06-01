@@ -172,7 +172,7 @@ export default function DynamicForm() {
                       </VStack>
                       <HStack>
                         <Input
-                          placeholder="trade_price"
+                          placeholder="卸価格"
                           type="number"
                           {...register(
                             `product.${absoluteIndex}.trade_price` as const,
@@ -189,7 +189,7 @@ export default function DynamicForm() {
                           defaultValue={f.trade_price}
                         />
                         <Input
-                          placeholder="retail_price"
+                          placeholder="小売価格"
                           type="number"
                           {...register(
                             `product.${absoluteIndex}.retail_price` as const,
