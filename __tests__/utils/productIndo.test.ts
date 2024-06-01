@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { splitArrayIntoChunksOfSix } from '@/utils/productInfo' // 'yourModule'は関数が定義されているファイル名に置き換えてください
+import { splitArrayIntoChunksOfSix } from '@/utils/productInfo'
 
 describe('splitArrayIntoChunksOfSix', () => {
   it('should split an array into chunks of six', () => {

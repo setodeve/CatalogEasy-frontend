@@ -78,7 +78,6 @@ export default function DynamicForm() {
           _media={[{ type: 'print', css: { display: 'none' } }]}
           style={{
             width: '120%',
-            // justifyContent: 'space-between',
             zIndex: 1,
             margin: '20px 20px',
           }}
@@ -113,19 +112,13 @@ export default function DynamicForm() {
             <SimpleGrid
               key={`chunk-${chunkIndex}`}
               className="page"
-              // w="full"
               columns={{ base: 3, md: 1 }}
               gap="md"
             >
               {chunk.map((f, fieldIndex) => {
                 const absoluteIndex = chunkIndex * 6 + fieldIndex
                 return (
-                  <GridItem
-                    key={f.id}
-                    // style={{ marginTop: '10px' }}
-                    w="full"
-                    h="4xs"
-                  >
+                  <GridItem key={f.id} w="full" h="4xs">
                     <h5>{`No.${absoluteIndex + 1}`}</h5>
                     <Icon
                       type="button"
