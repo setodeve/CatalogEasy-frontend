@@ -216,7 +216,7 @@ export default function DynamicForm() {
                             ? 'error'
                             : ''
                         }
-                        size="sm"
+                        size="xs"
                         defaultValue={f.remark}
                       />
                     </VStack>

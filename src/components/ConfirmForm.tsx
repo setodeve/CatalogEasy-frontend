@@ -104,7 +104,7 @@ export default function ConfirmForm({
                         variant="unstyled"
                         isDisabled
                         defaultValue={f.remark}
-                        size="sm"
+                        size="xs"
                         style={{ opacity: 1 }}
                       />
                     </VStack>
