@@ -10,6 +10,7 @@ import {
   Input,
   VStack,
 } from '@yamada-ui/react'
+import { useState } from 'react'
 import type { CSSProperties } from 'react'
 import type { ProductsData } from '@/types/product'
 
@@ -18,6 +19,16 @@ export default function ConfirmForm({
 }: {
   productInfo: ProductsData[]
 }) {
+  const [retailShow, setRetailShow] = useState(true)
+  const [tradeShow, setTradeShow] = useState(true)
+
+  const retailCheckboxChange = () => {
+    setRetailShow(!retailShow)
+  }
+
+  const tradeCheckboxChange = () => {
+    setTradeShow(!tradeShow)
+  }
   return (
     <>
       {/* TODO 別のcssの当て方がないか検討する*/}
@@ -32,6 +43,24 @@ export default function ConfirmForm({
           }
         }`}
       </style>
+      <HStack>
+        <label>
+          <input
+            type="checkbox"
+            checked={tradeShow}
+            onChange={tradeCheckboxChange}
+          />
+          卸価格表示
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={retailShow}
+            onChange={retailCheckboxChange}
+          />
+          小売価格表示
+        </label>
+      </HStack>
       <VStack className="printCatalog">
         {splitArrayIntoChunksOfSix(productInfo).map((chunk, chunkIndex) => {
           return (
@@ -51,7 +80,7 @@ export default function ConfirmForm({
                         {f.image ? (
                           <Image
                             src={f.image}
-                            alt="Dropped content"
+                            alt="商品画像"
                             style={styles.image}
                           />
                         ) : (
@@ -81,24 +110,28 @@ export default function ConfirmForm({
                         />
                       </VStack>
                       <HStack>
-                        <Input
-                          variant="unstyled"
-                          isDisabled
-                          placeholder="trade_price"
-                          type="number"
-                          size="xs"
-                          defaultValue={f.trade_price}
-                          style={{ opacity: 1 }}
-                        />
-                        <Input
-                          variant="unstyled"
-                          isDisabled
-                          placeholder="retail_price"
-                          type="number"
-                          size="xs"
-                          defaultValue={f.retail_price}
-                          style={{ opacity: 1 }}
-                        />
+                        {tradeShow ? (
+                          <Input
+                            variant="unstyled"
+                            isDisabled
+                            placeholder="卸価格"
+                            type="number"
+                            size="xs"
+                            defaultValue={f.trade_price}
+                            style={{ opacity: 1 }}
+                          />
+                        ) : null}
+                        {retailShow ? (
+                          <Input
+                            variant="unstyled"
+                            isDisabled
+                            placeholder="小売価格"
+                            type="number"
+                            size="xs"
+                            defaultValue={f.retail_price}
+                            style={{ opacity: 1 }}
+                          />
+                        ) : null}
                       </HStack>
                       <Textarea
                         variant="unstyled"

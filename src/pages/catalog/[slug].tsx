@@ -35,9 +35,8 @@ export default function Page() {
         style={{
           width: '300px',
           zIndex: 1,
-          margin: '0 auto 10px auto',
+          margin: '10px auto 10px auto',
         }}
-        position="sticky"
         top="20"
       >
         <Button
