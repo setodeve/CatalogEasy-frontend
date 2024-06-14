@@ -8,8 +8,9 @@ import {
   TimelineLine,
 } from '@/components/TimeLine'
 import { Image, Heading, Box, SimpleGrid, GridItem } from '@yamada-ui/react'
+import type { ContentData } from '@/types/content'
 
-export default function App() {
+export default function App({ content }: ContentData) {
   return (
     <Box>
       <Box padding="50px 0">
@@ -217,4 +218,14 @@ export default function App() {
       </Box>
     </Box>
   )
+}
+
+export async function getStaticProps() {
+  const content = ''
+
+  return {
+    props: {
+      content,
+    },
+  }
 }
