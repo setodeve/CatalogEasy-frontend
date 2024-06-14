@@ -5,8 +5,9 @@ import {
   ListItem,
   Container,
 } from '@yamada-ui/react'
+import type { ContentData } from '@/types/content'
 
-export default function App() {
+export default function App({ content }: ContentData) {
   return (
     <Container w="80%" margin="0 auto">
       <Heading as="h3" size="md" isTruncated>
@@ -237,4 +238,14 @@ export default function App() {
       <Text>以上</Text>
     </Container>
   )
+}
+
+export async function getStaticProps() {
+  const content = ''
+
+  return {
+    props: {
+      content,
+    },
+  }
 }
