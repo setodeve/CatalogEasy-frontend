@@ -14,6 +14,10 @@ export const fetchCatalogData = async (id: string | string[]) => {
   return apiRequest('GET', `/catalogs/${id}`)
 }
 
+export const changeCatalogNameData = async (id: string, name: string) => {
+  return apiRequest('PUT', `/catalogs/${id}`, { name })
+}
+
 export const fetchSessionData = async () => {
   return apiRequest('GET', `/auth/sessions`)
 }
