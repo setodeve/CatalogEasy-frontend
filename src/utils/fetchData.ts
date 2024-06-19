@@ -15,7 +15,7 @@ export const fetchCatalogData = async (id: string | string[]) => {
 }
 
 export const changeCatalogNameData = async (id: string, name: string) => {
-  return apiRequest('PUT', `/catalogs/${id}`, { id, name })
+  return apiRequest('PUT', `/catalogs/${id}`, { name })
 }
 
 export const fetchSessionData = async () => {
