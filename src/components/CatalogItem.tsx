@@ -32,7 +32,7 @@ const App = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [name, setName] = useState<string>(catalog.name)
-  const test = (e: MouseEvent) => {
+  const openModal = (e: MouseEvent) => {
     e.preventDefault()
     onOpen()
   }
@@ -56,7 +56,6 @@ const App = ({
         })
       })
   }
-  console.log(new Date().toDateString)
   const todayFlg =
     new Date().toDateString() === new Date(catalog.created_at).toDateString()
   return (
@@ -67,7 +66,7 @@ const App = ({
             {name}
           </Heading>
           <Tooltip label="カタログ名を変更できます">
-            <Button onClick={test} zIndex="100" size="xs">
+            <Button onClick={openModal} zIndex="100" size="xs">
               <FontAwesomeIcon icon={faWrench} />
             </Button>
           </Tooltip>
