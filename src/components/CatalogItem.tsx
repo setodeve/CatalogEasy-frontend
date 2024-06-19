@@ -11,6 +11,7 @@ import {
   VStack,
   Input,
   useNotice,
+  Badge,
 } from '@yamada-ui/react'
 import type { CatalogData } from '@/types/catalogs'
 import { Icon as FontAwesomeIcon } from '@yamada-ui/fontawesome'
@@ -47,7 +48,7 @@ const App = ({
         onClose()
       })
       .catch((err) => {
-        console.log(err)
+        console.error('Error updating catalog name:', err)
         notice({
           description: 'カタログ名変更に失敗しました',
           placement: 'bottom-right',
@@ -55,6 +56,9 @@ const App = ({
         })
       })
   }
+  console.log(new Date().toDateString)
+  const todayFlg =
+    new Date().toDateString() === new Date(catalog.created_at).toDateString()
   return (
     <Link href={`/catalog/${catalog_key}`} key={catalog_key}>
       <GridItem h="4xs" rounded="md" bg="primary" padding={2} color="white">
@@ -71,6 +75,7 @@ const App = ({
         <Heading as="h6" size="xs" isTruncated>
           作成日時：{getFormattedDate(catalog.created_at)}
         </Heading>
+        {todayFlg ? <Badge colorScheme="amber">New</Badge> : null}
         <Modal isOpen={isOpen} onClose={onClose} size="sm" padding="30px 10px">
           <ModalBody style={{ margin: 'auto' }}>
             <VStack>
