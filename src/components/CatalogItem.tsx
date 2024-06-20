@@ -67,7 +67,7 @@ const App = ({
           </Heading>
           <Tooltip label="カタログ名を変更できます">
             <Button onClick={openModal} zIndex="100" size="xs">
-              <FontAwesomeIcon icon={faWrench} />
+              <FontAwesomeIcon icon={faWrench} color="#444444" />
             </Button>
           </Tooltip>
         </HStack>
@@ -80,7 +80,7 @@ const App = ({
             <VStack>
               <Input
                 defaultValue={name}
-                maxLength={20}
+                maxLength={10}
                 onChange={(e) => setName(e.target.value)}
               />
               <Button

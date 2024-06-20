@@ -31,7 +31,7 @@ export default function App() {
   return (
     <Box>
       <Box textAlign="center" marginY={4}>
-        <Heading color="primary">
+        <Heading color="#444444">
           <FontAwesomeIcon icon={faBook} />
           カタログ一覧
         </Heading>
